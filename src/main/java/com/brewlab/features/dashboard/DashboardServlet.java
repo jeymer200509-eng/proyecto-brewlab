@@ -29,6 +29,7 @@ public final class DashboardServlet extends HttpServlet {
         req.setAttribute("sampleRatioFormula", BrewRatio.FORMULA);
         req.setAttribute("dbEngineLabel", container.getManagedDataSource().getEngineLabel());
         req.setAttribute("schemaVersion", Integer.valueOf(container.getSchemaVersion()));
+        req.setAttribute("activeBrewSession", container.getBrewSessionRepository().findLatestInProgress(user.getId()));
 
         WebSupport.render(req, resp, "inicio", "Panel de Laboratorio — BrewLab", "dashboard/index.jsp");
     }

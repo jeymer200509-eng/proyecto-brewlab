@@ -2,6 +2,7 @@ package com.brewlab.app;
 
 import com.brewlab.data.db.DataSourceFactory;
 import com.brewlab.data.db.SchemaMigrator;
+import com.brewlab.data.repositories.BrewSessionRepository;
 import com.brewlab.data.repositories.CoffeeLotRepository;
 import com.brewlab.data.repositories.EquipmentRepository;
 import com.brewlab.data.repositories.RecipeRepository;
@@ -33,6 +34,7 @@ public final class AppContainer implements AutoCloseable {
     private final EquipmentRepository equipmentRepository;
     private final WaterProfileRepository waterProfileRepository;
     private final RecipeRepository recipeRepository;
+    private final BrewSessionRepository brewSessionRepository;
 
     public AppContainer(AppConfig config, DataSourceFactory.ManagedDataSource managedDataSource, Clock clock) {
         this.config = config;
@@ -51,6 +53,7 @@ public final class AppContainer implements AutoCloseable {
         this.equipmentRepository = new EquipmentRepository(ds);
         this.waterProfileRepository = new WaterProfileRepository(ds);
         this.recipeRepository = new RecipeRepository(ds);
+        this.brewSessionRepository = new BrewSessionRepository(ds);
     }
 
     public static AppContainer from(ServletContext ctx) {
@@ -115,6 +118,10 @@ public final class AppContainer implements AutoCloseable {
 
     public RecipeRepository getRecipeRepository() {
         return recipeRepository;
+    }
+
+    public BrewSessionRepository getBrewSessionRepository() {
+        return brewSessionRepository;
     }
 
     @Override

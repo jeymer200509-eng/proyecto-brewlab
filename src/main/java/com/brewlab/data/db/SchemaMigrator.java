@@ -28,7 +28,8 @@ public final class SchemaMigrator {
     private static final List<String> MIGRATIONS = Collections.unmodifiableList(Arrays.asList(
             "V001__base_auth_and_settings.sql",
             "V002__coffee_library.sql",
-            "V003__equipment_water_and_recipes.sql"
+            "V003__equipment_water_and_recipes.sql",
+            "V004__brew_assistant.sql"
     ));
 
     private final DataSource dataSource;
