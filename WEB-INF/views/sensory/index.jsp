@@ -1,28 +1,33 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="pageHeading" value="Evaluación Sensorial y Explorador Jerárquico"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<section class="page-head">
-  <div>
-    <div class="eyebrow">Módulos 5 y 6 · Sensory Lab &amp; Flavor Explorer</div>
-    <h1 class="page-title">Evaluación Sensorial y Explorador Jerárquico</h1>
-    <p class="page-subtitle">
-      Registra atributos descriptivos orientativos, explora descriptores jerárquicos (<span class="mono">Familia → Subfamilia → Descriptor</span>)
-      con intensidad y escala separadas, y conserva el agrado subjetivo en un bloque afectivo independiente.
-    </p>
-  </div>
-  <div class="cluster">
-    <span class="badge badge-measured" title="Esta evaluación simplificada de trabajo no sustituye ni representa el protocolo oficial CVA/SCA">
-      Evaluación Interna de Laboratorio V1 (No es CVA oficial)
-    </span>
-    <span class="badge badge-planned mono"><c:out value="${taxonomyVersion}" /></span>
+<section class="surface-card card" style="margin-bottom: 1rem;">
+  <div class="card-header" style="margin-bottom: 0;">
+    <div>
+      <div class="field-hint">Módulos 5 y 6 · Sensory Lab &amp; Flavor Explorer</div>
+      <h2 style="margin-top: 0.25rem;">Evaluación Sensorial y Explorador Jerárquico</h2>
+      <p class="field-hint" style="margin-bottom: 0;">
+        Registra atributos descriptivos orientativos, explora descriptores jerárquicos (<span class="mono">Familia → Subfamilia → Descriptor</span>)
+        con intensidad y escala separadas, y conserva el agrado subjetivo en un bloque afectivo independiente.
+      </p>
+    </div>
+    <div class="cluster">
+      <span class="badge badge-measured" title="Esta evaluación simplificada de trabajo no sustituye ni representa el protocolo oficial CVA/SCA">
+        Evaluación Interna de Laboratorio V1 (No es CVA oficial)
+      </span>
+      <span class="badge badge-planned mono"><c:out value="${taxonomyVersion}" /></span>
+    </div>
   </div>
 </section>
 
-<div class="flash flash-info" role="note" style="margin-bottom: 1.25rem;">
-  <strong>Atribución y licencia del vocabulario:</strong>
-  <c:out value="${taxonomyAttribution}" />. Los valores no evaluados se almacenan como <span class="mono">null</span> (<span class="mono">—</span>), nunca como <span class="mono">0</span>.
+<div class="alert alert-info flash flash-info" role="note" style="margin-bottom: 1.25rem;">
+  <div>
+    <strong>Atribución y licencia del vocabulario:</strong>
+    <c:out value="${taxonomyAttribution}" />. Los valores no evaluados se almacenan como <span class="mono">null</span> (<span class="mono">—</span>), nunca como <span class="mono">0</span>.
+  </div>
 </div>
 
 <form method="post" action="${pageContext.request.contextPath}/app/catacion" data-once="true">
@@ -31,9 +36,9 @@
 
   <div class="grid-2" style="align-items: start; margin-bottom: 1.5rem;">
     <!-- COLUMNA IZQUIERDA: Vínculo de trazabilidad + Atributos Descriptivos + Bloque Afectivo Separado -->
-    <div class="stack">
+    <div class="stack-md stack">
       <!-- 1. Trazabilidad y contexto de muestra -->
-      <section class="card">
+      <section class="surface-card card">
         <div class="card-header">
           <div>
             <span class="badge badge-measured">1 · Muestra y Trazabilidad</span>
@@ -41,22 +46,22 @@
           </div>
         </div>
 
-        <div class="form-grid-2">
+        <div class="form-grid form-grid-2">
           <div class="field">
-            <label for="evaluatorName">Catador / Evaluador *</label>
-            <input id="evaluatorName" name="evaluatorName" type="text" required
+            <label class="field-label" for="evaluatorName">Catador / Evaluador *</label>
+            <input class="input" id="evaluatorName" name="evaluatorName" type="text" required
                    value="<c:out value='${currentUser.displayName}' />" />
           </div>
           <div class="field">
-            <label for="assessedOn">Fecha de evaluación *</label>
-            <input id="assessedOn" name="assessedOn" type="date" required
+            <label class="field-label" for="assessedOn">Fecha de evaluación *</label>
+            <input class="input" id="assessedOn" name="assessedOn" type="date" required
                    value="<c:out value='${todayIso}' />" />
           </div>
         </div>
 
         <div class="field" style="margin-top: 0.75rem;">
-          <label for="brewSessionId">Sesión de preparación vinculada (opcional)</label>
-          <select id="brewSessionId" name="brewSessionId">
+          <label class="field-label" for="brewSessionId">Sesión de preparación vinculada (opcional)</label>
+          <select class="input" id="brewSessionId" name="brewSessionId">
             <option value="">— Cata abierta / Sin sesión específica —</option>
             <c:forEach var="bs" items="${brewSessions}">
               <option value="${bs.id}" <c:if test="${bs.id == preselectedSessionId}">selected</c:if>>
@@ -67,10 +72,10 @@
           </select>
         </div>
 
-        <div class="form-grid-2" style="margin-top: 0.75rem;">
+        <div class="form-grid form-grid-2" style="margin-top: 0.75rem;">
           <div class="field">
-            <label for="coffeeLotId">Lote de café (CoffeeLot)</label>
-            <select id="coffeeLotId" name="coffeeLotId">
+            <label class="field-label" for="coffeeLotId">Lote de café (CoffeeLot)</label>
+            <select class="input" id="coffeeLotId" name="coffeeLotId">
               <option value="">— Automático desde tueste/sesión o sin lote —</option>
               <c:forEach var="lot" items="${coffeeLots}">
                 <option value="${lot.id}" <c:if test="${lot.id == preselectedLotId}">selected</c:if>>
@@ -80,8 +85,8 @@
             </select>
           </div>
           <div class="field">
-            <label for="roastBatchId">Lote de tostión (RoastBatch)</label>
-            <select id="roastBatchId" name="roastBatchId">
+            <label class="field-label" for="roastBatchId">Lote de tostión (RoastBatch)</label>
+            <select class="input" id="roastBatchId" name="roastBatchId">
               <option value="">— Opcional —</option>
               <c:forEach var="rb" items="${roastBatches}">
                 <option value="${rb.id}" <c:if test="${rb.id == preselectedBatchId}">selected</c:if>>
@@ -94,18 +99,18 @@
       </section>
 
       <!-- 2. Bloque Descriptivo Orientativo -->
-      <section class="card">
+      <section class="surface-card card">
         <div class="card-header">
           <div>
             <span class="badge badge-measured">2 · Bloque Descriptivo</span>
             <h2 class="card-title" style="margin-top: 0.35rem;">Atributos Orientativos de Intensidad</h2>
-            <p class="card-subtitle">
+            <p class="field-hint card-subtitle" style="margin-bottom: 0;">
               Evalúa la intensidad percibida en la escala elegida. Deja en blanco cualquier atributo no evaluado (<span class="mono">null</span>).
             </p>
           </div>
           <div class="field" style="min-width: 145px;">
-            <label for="attributeScale">Escala explícita</label>
-            <select id="attributeScale" name="attributeScale">
+            <label class="field-label" for="attributeScale">Escala explícita</label>
+            <select class="input" id="attributeScale" name="attributeScale">
               <option value="1-5" <c:if test="${settings.defaultSensoryScale == '1-5'}">selected</c:if>>Escala 1 a 5</option>
               <option value="0-10" <c:if test="${settings.defaultSensoryScale == '0-10'}">selected</c:if>>Escala 0 a 10</option>
               <option value="1-15">Escala 1 a 15</option>
@@ -113,77 +118,77 @@
           </div>
         </div>
 
-        <div class="form-grid-2">
+        <div class="form-grid form-grid-2">
           <div class="field">
-            <label for="fragranceAroma">Fragancia / Aroma</label>
-            <input id="fragranceAroma" name="fragranceAroma" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="fragranceAroma">Fragancia / Aroma</label>
+            <input class="input" id="fragranceAroma" name="fragranceAroma" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="flavor">Sabor</label>
-            <input id="flavor" name="flavor" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="flavor">Sabor</label>
+            <input class="input" id="flavor" name="flavor" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="acidity">Acidez</label>
-            <input id="acidity" name="acidity" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="acidity">Acidez</label>
+            <input class="input" id="acidity" name="acidity" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="sweetness">Dulzor</label>
-            <input id="sweetness" name="sweetness" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="sweetness">Dulzor</label>
+            <input class="input" id="sweetness" name="sweetness" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="bitterness">Amargor</label>
-            <input id="bitterness" name="bitterness" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="bitterness">Amargor</label>
+            <input class="input" id="bitterness" name="bitterness" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="bodyTexture">Cuerpo / Textura</label>
-            <input id="bodyTexture" name="bodyTexture" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="bodyTexture">Cuerpo / Textura</label>
+            <input class="input" id="bodyTexture" name="bodyTexture" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="aftertaste">Posgusto</label>
-            <input id="aftertaste" name="aftertaste" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="aftertaste">Posgusto</label>
+            <input class="input" id="aftertaste" name="aftertaste" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
           <div class="field">
-            <label for="balance">Balance estructural</label>
-            <input id="balance" name="balance" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
+            <label class="field-label" for="balance">Balance estructural</label>
+            <input class="input" id="balance" name="balance" type="number" step="0.25" min="0" max="15" placeholder="No evaluado (—)" />
           </div>
         </div>
 
         <div class="field" style="margin-top: 0.75rem;">
-          <label for="descriptiveNotes">Notas descriptivas libres (evolución en taza de caliente a frío, textura, limpieza)</label>
-          <textarea id="descriptiveNotes" name="descriptiveNotes" rows="3"
+          <label class="field-label" for="descriptiveNotes">Notas descriptivas libres (evolución en taza de caliente a frío, textura, limpieza)</label>
+          <textarea class="input" id="descriptiveNotes" name="descriptiveNotes" rows="3"
                     placeholder="Ej.: En caliente predomina jazmín y durazno; al enfriar a 45 °C emerge acidez málica jugosa y posgusto a panela..."></textarea>
         </div>
       </section>
 
       <!-- 3. Bloque Afectivo Estrictamente Separado (PreferenceRecord) -->
-      <section class="card" style="border-color: rgba(155, 77, 150, 0.35);">
+      <section class="surface-card card" style="border-color: rgba(155, 77, 150, 0.35);">
         <div class="card-header">
           <div>
-            <span class="badge badge-affective">3 · Bloque Afectivo Separado (PreferenceRecord)</span>
+            <span class="badge badge-preference badge-affective">3 · Bloque Afectivo Separado (PreferenceRecord)</span>
             <h2 class="card-title" style="margin-top: 0.35rem;">Preferencia y Agrado del Evaluador</h2>
-            <p class="card-subtitle">
+            <p class="field-hint card-subtitle" style="margin-bottom: 0;">
               Separado del análisis descriptivo: mide cuánto te gustó esta taza y si repetirías la receta en este contexto.
             </p>
           </div>
         </div>
 
-        <div class="form-grid-3">
+        <div class="form-grid form-grid-3">
           <div class="field">
-            <label for="overallLiking">Agrado general</label>
-            <input id="overallLiking" name="overallLiking" type="number" step="0.5" min="1" max="100"
+            <label class="field-label" for="overallLiking">Agrado general</label>
+            <input class="input" id="overallLiking" name="overallLiking" type="number" step="0.5" min="1" max="100"
                    placeholder="Opcional (—)" />
           </div>
           <div class="field">
-            <label for="likingScale">Escala hedónica</label>
-            <select id="likingScale" name="likingScale">
+            <label class="field-label" for="likingScale">Escala hedónica</label>
+            <select class="input" id="likingScale" name="likingScale">
               <option value="1-9">Hedónica 1 a 9</option>
               <option value="1-5">Agrado 1 a 5</option>
               <option value="0-10">Agrado 0 a 10</option>
             </select>
           </div>
           <div class="field">
-            <label for="wouldRepeat">¿Repetirías esta receta?</label>
-            <select id="wouldRepeat" name="wouldRepeat">
+            <label class="field-label" for="wouldRepeat">¿Repetirías esta receta?</label>
+            <select class="input" id="wouldRepeat" name="wouldRepeat">
               <option value="">— Sin definir —</option>
               <option value="YES">Sí, repetir igual</option>
               <option value="MAYBE">Repetir con ajustes</option>
@@ -192,15 +197,15 @@
           </div>
         </div>
 
-        <div class="form-grid-2" style="margin-top: 0.75rem;">
+        <div class="form-grid form-grid-2" style="margin-top: 0.75rem;">
           <div class="field">
-            <label for="affectiveContext">Contexto de consumo / Momento</label>
-            <input id="affectiveContext" name="affectiveContext" type="text"
+            <label class="field-label" for="affectiveContext">Contexto de consumo / Momento</label>
+            <input class="input" id="affectiveContext" name="affectiveContext" type="text"
                    placeholder="Ej.: Taza matutina, calibración de barra, comparativa" />
           </div>
           <div class="field">
-            <label for="affectiveNotes">Impresión subjetiva / Preferencia personal</label>
-            <input id="affectiveNotes" name="affectiveNotes" type="text"
+            <label class="field-label" for="affectiveNotes">Impresión subjetiva / Preferencia personal</label>
+            <input class="input" id="affectiveNotes" name="affectiveNotes" type="text"
                    placeholder="Ej.: Muy placentera al templar; preferiría un punto más de cuerpo" />
           </div>
         </div>
@@ -212,20 +217,20 @@
     </div>
 
     <!-- COLUMNA DERECHA: Flavor Explorer (Rueda SVG original + Búsqueda + Lista accesible para teclado/lector) -->
-    <div class="stack">
-      <section class="card">
+    <div class="stack-md stack">
+      <section class="surface-card card">
         <div class="card-header">
           <div>
             <span class="badge badge-planned">4 · Flavor Explorer Original</span>
             <h2 class="card-title" style="margin-top: 0.35rem;">Rueda Jerárquica Concéntrica y Lista Accesible</h2>
-            <p class="card-subtitle">
+            <p class="field-hint card-subtitle" style="margin-bottom: 0;">
               Haz clic o pulsa <span class="mono">Enter</span> sobre un sector de <strong>Familia</strong> (anillo interior)
               o <strong>Subfamilia</strong> (anillo exterior), o usa el buscador y la lista accesible inferior.
             </p>
           </div>
           <div class="field" style="min-width: 140px;">
-            <label for="descriptorScale">Escala de descriptor</label>
-            <select id="descriptorScale" name="descriptorScale">
+            <label class="field-label" for="descriptorScale">Escala de descriptor</label>
+            <select class="input" id="descriptorScale" name="descriptorScale">
               <option value="1-5">Intensidad 1 a 5</option>
               <option value="1-3">Baja / Media / Alta (1-3)</option>
               <option value="0-10">Intensidad 0 a 10</option>
@@ -296,10 +301,10 @@
         </div>
 
         <!-- Buscador y estado de filtro activo -->
-        <div class="form-grid-2" style="align-items: end; margin-bottom: 0.85rem;">
+        <div class="form-grid form-grid-2" style="align-items: end; margin-bottom: 0.85rem;">
           <div class="field">
-            <label for="flavor-search-input">Buscar por familia, subfamilia o descriptor (accesible por teclado)</label>
-            <input id="flavor-search-input" type="search"
+            <label class="field-label" for="flavor-search-input">Buscar por familia, subfamilia o descriptor (accesible por teclado)</label>
+            <input class="input" id="flavor-search-input" type="search"
                    placeholder="Ej.: jazmín, cítricos, panela, cacao, mora..."
                    aria-controls="descriptor-accessible-list" />
           </div>
@@ -355,7 +360,7 @@
                       </label>
                     </td>
                     <td>
-                      <input type="number"
+                      <input class="input" type="number"
                              name="intensity_${desc.id}"
                              step="0.5" min="0.5" max="10"
                              placeholder="—"
@@ -363,7 +368,7 @@
                              style="padding: 0.3rem 0.45rem; font-size: 0.85rem;" />
                     </td>
                     <td>
-                      <input type="text"
+                      <input class="input" type="text"
                              name="note_${desc.id}"
                              placeholder="Opcional"
                              aria-label="Nota para ${desc.term}"
@@ -381,12 +386,12 @@
 </form>
 
 <!-- Crear descriptor personalizado -->
-<section class="card" style="margin-bottom: 1.5rem;">
+<section class="surface-card card" style="margin-bottom: 1.5rem;">
   <div class="card-header">
     <div>
       <span class="badge badge-estimated">Vocabulario Ampliable</span>
       <h2 class="card-title" style="margin-top: 0.35rem;">Añadir Descriptor Personalizado a la Taxonomía</h2>
-      <p class="card-subtitle">
+      <p class="field-hint card-subtitle" style="margin-bottom: 0;">
         Amplía el explorador con descriptores propios de tu región o laboratorio respetando la jerarquía <span class="mono">Familia → Subfamilia → Descriptor</span>.
       </p>
     </div>
@@ -394,25 +399,25 @@
   <form method="post" action="${pageContext.request.contextPath}/app/catacion" data-once="true">
     <input type="hidden" name="_csrf" value="${csrfToken}" />
     <input type="hidden" name="action" value="createCustomDescriptor" />
-    <div class="form-grid-4" style="align-items: end;">
+    <div class="form-grid form-grid-4" style="align-items: end;">
       <div class="field">
-        <label for="customFamily">Familia *</label>
-        <input id="customFamily" name="family" type="text" required
+        <label class="field-label" for="customFamily">Familia *</label>
+        <input class="input" id="customFamily" name="family" type="text" required
                placeholder="Ej.: Frutal Luminoso" />
       </div>
       <div class="field">
-        <label for="customSubfamily">Subfamilia *</label>
-        <input id="customSubfamily" name="subfamily" type="text" required
+        <label class="field-label" for="customSubfamily">Subfamilia *</label>
+        <input class="input" id="customSubfamily" name="subfamily" type="text" required
                placeholder="Ej.: Frutas andinas" />
       </div>
       <div class="field">
-        <label for="customTerm">Descriptor / Término *</label>
-        <input id="customTerm" name="term" type="text" required
+        <label class="field-label" for="customTerm">Descriptor / Término *</label>
+        <input class="input" id="customTerm" name="term" type="text" required
                placeholder="Ej.: Lulo / Naranjilla" />
       </div>
       <div style="display: flex; gap: 0.5rem; align-items: flex-end;">
         <div class="field" style="width: 90px;">
-          <label for="customColor">Color</label>
+          <label class="field-label" for="customColor">Color</label>
           <input id="customColor" name="colorHex" type="color" value="#C86D2D" style="height: 38px; padding: 2px;" />
         </div>
         <button type="submit" class="btn btn-secondary">Crear descriptor</button>
@@ -422,7 +427,7 @@
 </section>
 
 <!-- Historial de evaluaciones sensoriales registradas -->
-<section class="card">
+<section class="surface-card card">
   <div class="card-header">
     <div>
       <span class="badge badge-measured">Registro Histórico</span>
@@ -439,17 +444,17 @@
       </div>
     </c:when>
     <c:otherwise>
-      <div class="stack">
-        <c:forEach var="as" items="${assessments}">
-          <c:set var="asLot" value="${lotMap[as.coffeeLotId]}" />
-          <c:set var="asBatch" value="${batchMap[as.roastBatchId]}" />
-          <c:set var="asSession" value="${sessionMap[as.brewSessionId]}" />
-          <article class="card" style="background: rgba(255,255,255,0.58);">
+      <div class="stack-md stack">
+        <c:forEach var="assess" items="${assessments}">
+          <c:set var="asLot" value="${lotMap[assess.coffeeLotId]}" />
+          <c:set var="asBatch" value="${batchMap[assess.roastBatchId]}" />
+          <c:set var="asSession" value="${sessionMap[assess.brewSessionId]}" />
+          <article class="surface-card card" style="background: rgba(255,255,255,0.58);">
             <div class="card-header">
               <div>
                 <div class="cluster" style="margin-bottom: 0.3rem;">
-                  <span class="badge badge-measured">Escala descriptiva: <c:out value="${as.attributeScale}" /></span>
-                  <span class="mono muted"><c:out value="${as.assessedOnDisplay}" /> · Evaluador: <c:out value="${as.evaluatorName}" /></span>
+                  <span class="badge badge-measured">Escala descriptiva: <c:out value="${assess.attributeScale}" /></span>
+                  <span class="field-hint mono"><c:out value="${assess.assessedOnDisplay}" /> · Evaluador: <c:out value="${assess.evaluatorName}" /></span>
                   <c:if test="${not empty asLot}">
                     <span class="badge badge-planned">[<c:out value="${asLot.code}" />] <c:out value="${asLot.name}" /></span>
                   </c:if>
@@ -466,7 +471,7 @@
               <form method="post" action="${pageContext.request.contextPath}/app/catacion" style="margin: 0;">
                 <input type="hidden" name="_csrf" value="${csrfToken}" />
                 <input type="hidden" name="action" value="deleteAssessment" />
-                <input type="hidden" name="assessmentId" value="${as.id}" />
+                <input type="hidden" name="assessmentId" value="${assess.id}" />
                 <button type="submit" class="btn btn-secondary btn-sm">Eliminar</button>
               </form>
             </div>
@@ -488,25 +493,25 @@
                 </thead>
                 <tbody class="num">
                   <tr>
-                    <td><c:out value="${as.fragranceAromaDisplay}" /></td>
-                    <td><c:out value="${as.flavorDisplay}" /></td>
-                    <td><c:out value="${as.acidityDisplay}" /></td>
-                    <td><c:out value="${as.sweetnessDisplay}" /></td>
-                    <td><c:out value="${as.bitternessDisplay}" /></td>
-                    <td><c:out value="${as.bodyTextureDisplay}" /></td>
-                    <td><c:out value="${as.aftertasteDisplay}" /></td>
-                    <td><c:out value="${as.balanceDisplay}" /></td>
+                    <td><c:out value="${assess.fragranceAromaDisplay}" /></td>
+                    <td><c:out value="${assess.flavorDisplay}" /></td>
+                    <td><c:out value="${assess.acidityDisplay}" /></td>
+                    <td><c:out value="${assess.sweetnessDisplay}" /></td>
+                    <td><c:out value="${assess.bitternessDisplay}" /></td>
+                    <td><c:out value="${assess.bodyTextureDisplay}" /></td>
+                    <td><c:out value="${assess.aftertasteDisplay}" /></td>
+                    <td><c:out value="${assess.balanceDisplay}" /></td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <!-- Descriptores jerárquicos con intensidad y escala por separado -->
-            <c:if test="${not empty as.descriptors}">
+            <c:if test="${not empty assess.descriptors}">
               <div style="margin-bottom: 0.65rem;">
                 <strong style="font-size: 0.84rem;">Descriptores percibidos:</strong>
                 <div class="cluster" style="margin-top: 0.35rem;">
-                  <c:forEach var="ad" items="${as.descriptors}">
+                  <c:forEach var="ad" items="${assess.descriptors}">
                     <span class="badge" style="background: rgba(35,25,21,0.06); border: 1px solid ${ad.descriptor.colorHex};">
                       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${ad.descriptor.colorHex};margin-right:4px;"></span>
                       <c:out value="${ad.descriptor.hierarchyLabel}" />
@@ -517,26 +522,26 @@
               </div>
             </c:if>
 
-            <c:if test="${not empty as.descriptiveNotes}">
+            <c:if test="${not empty assess.descriptiveNotes}">
               <p style="margin: 0.35rem 0; font-size: 0.9rem;">
-                <strong>Notas descriptivas:</strong> <c:out value="${as.descriptiveNotes}" />
+                <strong>Notas descriptivas:</strong> <c:out value="${assess.descriptiveNotes}" />
               </p>
             </c:if>
 
             <!-- Bloque afectivo separado -->
-            <c:if test="${not empty as.preferenceRecord}">
+            <c:if test="${not empty assess.preferenceRecord}">
               <div style="margin-top: 0.65rem; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); background: rgba(155, 77, 150, 0.08); border-left: 3px solid #9B4D96;">
-                <span class="badge badge-affective">Registro Afectivo Separado</span>
-                <span class="mono" style="margin-left: 0.5rem;">
-                  Agrado: <strong><c:out value="${as.preferenceRecord.overallLikingDisplay}" /></strong>
-                  · Repetir: <strong><c:out value="${as.preferenceRecord.wouldRepeatDisplay}" /></strong>
+                <span class="badge badge-preference badge-affective">Registro Afectivo Separado</span>
+                <span class="tabular mono" style="margin-left: 0.5rem;">
+                  Agrado: <strong><c:out value="${assess.preferenceRecord.overallLikingDisplay}" /></strong>
+                  · Repetir: <strong><c:out value="${assess.preferenceRecord.wouldRepeatDisplay}" /></strong>
                 </span>
-                <c:if test="${not empty as.preferenceRecord.affectiveContext}">
-                  <span class="muted"> · Contexto: <c:out value="${as.preferenceRecord.affectiveContext}" /></span>
+                <c:if test="${not empty assess.preferenceRecord.affectiveContext}">
+                  <span class="field-hint muted"> · Contexto: <c:out value="${assess.preferenceRecord.affectiveContext}" /></span>
                 </c:if>
-                <c:if test="${not empty as.preferenceRecord.affectiveNotes}">
+                <c:if test="${not empty assess.preferenceRecord.affectiveNotes}">
                   <div style="margin-top: 0.25rem; font-size: 0.88rem;">
-                    <c:out value="${as.preferenceRecord.affectiveNotes}" />
+                    <c:out value="${assess.preferenceRecord.affectiveNotes}" />
                   </div>
                 </c:if>
               </div>

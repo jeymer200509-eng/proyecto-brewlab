@@ -36,35 +36,35 @@
               </tr>
             </thead>
             <tbody>
-              <c:forEach var="eq" items="${equipmentList}">
+              <c:forEach var="equip" items="${equipmentList}">
                 <tr>
                   <td>
-                    <span class="badge badge-planned"><c:out value="${eq.typeLabel}"/></span>
-                    <c:if test="${eq.demo}"><span class="badge badge-demo">[DEMO]</span></c:if>
+                    <span class="badge badge-planned"><c:out value="${equip.typeLabel}"/></span>
+                    <c:if test="${equip.demo}"><span class="badge badge-demo">[DEMO]</span></c:if>
                   </td>
                   <td>
-                    <div style="font-weight:600;"><c:out value="${eq.name}"/></div>
+                    <div style="font-weight:600;"><c:out value="${equip.name}"/></div>
                     <div class="field-hint">
-                      <c:out value="${not empty eq.brand ? eq.brand : '—'}"/> ·
-                      <c:out value="${not empty eq.model ? eq.model : '—'}"/>
+                      <c:out value="${not empty equip.brand ? equip.brand : '—'}"/> ·
+                      <c:out value="${not empty equip.model ? equip.model : '—'}"/>
                     </div>
                   </td>
                   <td>
-                    <div><c:out value="${not empty eq.settingsScale ? eq.settingsScale : '—'}"/></div>
-                    <c:if test="${not empty eq.notes}">
-                      <div class="field-hint"><c:out value="${eq.notes}"/></div>
+                    <div><c:out value="${not empty equip.settingsScale ? equip.settingsScale : '—'}"/></div>
+                    <c:if test="${not empty equip.notes}">
+                      <div class="field-hint"><c:out value="${equip.notes}"/></div>
                     </c:if>
                   </td>
                   <td>
                     <div class="cluster">
                       <a class="btn btn-secondary btn-sm"
-                         href="${pageContext.request.contextPath}/app/equipos?editEquipmentId=${fn:escapeXml(eq.id)}#form-eq">
+                         href="${pageContext.request.contextPath}/app/equipos?editEquipmentId=${fn:escapeXml(equip.id)}#form-eq">
                         Editar
                       </a>
                       <form method="post" action="${pageContext.request.contextPath}/app/equipos" style="display:inline;">
                         <input type="hidden" name="_csrf" value="${fn:escapeXml(csrfToken)}">
                         <input type="hidden" name="action" value="deleteEquipment">
-                        <input type="hidden" name="equipmentId" value="${fn:escapeXml(eq.id)}">
+                        <input type="hidden" name="equipmentId" value="${fn:escapeXml(equip.id)}">
                         <button type="submit" class="btn btn-ghost btn-sm">Eliminar</button>
                       </form>
                     </div>

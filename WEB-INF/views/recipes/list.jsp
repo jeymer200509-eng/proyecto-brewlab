@@ -229,10 +229,10 @@
       <div class="field">
         <span class="field-label">Equipos previstos (selecciona los que apliquen)</span>
         <div class="cluster">
-          <c:forEach var="eq" items="${equipmentList}">
+          <c:forEach var="equip" items="${equipmentList}">
             <label class="cluster" style="font-size:0.84rem; background: var(--bg-subtle); padding:0.3rem 0.6rem; border-radius: var(--radius-sm); cursor:pointer;">
-              <input type="checkbox" name="equipmentIds" value="${fn:escapeXml(eq.id)}">
-              <span><c:out value="${eq.typeLabel}: ${eq.name}"/></span>
+              <input type="checkbox" name="equipmentIds" value="${fn:escapeXml(equip.id)}">
+              <span><c:out value="${equip.typeLabel}: ${equip.name}"/></span>
             </label>
           </c:forEach>
         </div>

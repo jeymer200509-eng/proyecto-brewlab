@@ -1,25 +1,28 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="pageHeading" value="Historial, Analítica y Comparador de Sesiones"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<section class="page-head">
-  <div>
-    <div class="eyebrow">Módulo 7 · Analytics &amp; Comparison</div>
-    <h1 class="page-title">Historial, Analítica y Comparador de Sesiones</h1>
-    <p class="page-subtitle">
-      Filtra preparaciones por café, tostión, método, receta, equipo y fechas; selecciona dos o más sesiones
-      para contrastar parámetros previstos vs. medidos, perfil sensorial y advertencias metodológicas.
-    </p>
-  </div>
-  <div class="cluster">
-    <span class="badge badge-measured mono">Muestra filtrada: N = <c:out value="${fn:length(filteredSessions)}" /> / <c:out value="${totalSessionCount}" /></span>
-    <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/experimentos">Ir a Experiment Lab →</a>
+<section class="surface-card card" style="margin-bottom: 1rem;">
+  <div class="card-header" style="margin-bottom: 0;">
+    <div>
+      <div class="field-hint">Módulo 7 · Analytics &amp; Comparison</div>
+      <h2 style="margin-top: 0.25rem;">Historial, Analítica y Comparador de Sesiones</h2>
+      <p class="field-hint" style="margin-bottom: 0;">
+        Filtra preparaciones por café, tostión, método, receta, equipo y fechas; selecciona dos o más sesiones
+        para contrastar parámetros previstos vs. medidos, perfil sensorial y advertencias metodológicas.
+      </p>
+    </div>
+    <div class="cluster">
+      <span class="badge badge-measured tabular mono">Muestra filtrada: N = <c:out value="${fn:length(filteredSessions)}" /> / <c:out value="${totalSessionCount}" /></span>
+      <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/experimentos">Ir a Experiment Lab →</a>
+    </div>
   </div>
 </section>
 
 <!-- 1. Filtros multicriterio de historial -->
-<section class="card" style="margin-bottom: 1.5rem;">
+<section class="surface-card card" style="margin-bottom: 1.5rem;">
   <div class="card-header">
     <div>
       <span class="badge badge-planned">Filtro de Historial</span>
@@ -29,10 +32,10 @@
   </div>
 
   <form method="get" action="${pageContext.request.contextPath}/app/analisis">
-    <div class="form-grid-4">
+    <div class="form-grid form-grid-4">
       <div class="field">
-        <label for="filterLotId">Café (CoffeeLot)</label>
-        <select id="filterLotId" name="coffeeLotId">
+        <label class="field-label" for="filterLotId">Café (CoffeeLot)</label>
+        <select class="input" id="filterLotId" name="coffeeLotId">
           <option value="">Todos los lotes</option>
           <c:forEach var="lot" items="${coffeeLots}">
             <option value="${lot.id}" <c:if test="${lot.id == filterLotId}">selected</c:if>>
@@ -43,8 +46,8 @@
       </div>
 
       <div class="field">
-        <label for="filterBatchId">Tostión (RoastBatch)</label>
-        <select id="filterBatchId" name="roastBatchId">
+        <label class="field-label" for="filterBatchId">Tostión (RoastBatch)</label>
+        <select class="input" id="filterBatchId" name="roastBatchId">
           <option value="">Todos los tuestes</option>
           <c:forEach var="rb" items="${roastBatches}">
             <option value="${rb.id}" <c:if test="${rb.id == filterBatchId}">selected</c:if>>
@@ -55,8 +58,8 @@
       </div>
 
       <div class="field">
-        <label for="filterMethod">Método</label>
-        <select id="filterMethod" name="method">
+        <label class="field-label" for="filterMethod">Método</label>
+        <select class="input" id="filterMethod" name="method">
           <option value="">Todos los métodos</option>
           <c:forEach var="m" items="${availableMethods}">
             <option value="${m}" <c:if test="${m == filterMethod}">selected</c:if>><c:out value="${m}" /></option>
@@ -65,8 +68,8 @@
       </div>
 
       <div class="field">
-        <label for="filterRecipeId">Receta</label>
-        <select id="filterRecipeId" name="recipeId">
+        <label class="field-label" for="filterRecipeId">Receta</label>
+        <select class="input" id="filterRecipeId" name="recipeId">
           <option value="">Todas las recetas</option>
           <c:forEach var="r" items="${recipes}">
             <option value="${r.id}" <c:if test="${r.id == filterRecipeId}">selected</c:if>>
@@ -77,27 +80,27 @@
       </div>
     </div>
 
-    <div class="form-grid-4" style="margin-top: 0.75rem; align-items: end;">
+    <div class="form-grid form-grid-4" style="margin-top: 0.75rem; align-items: end;">
       <div class="field">
-        <label for="filterEquipmentId">Equipo utilizado</label>
-        <select id="filterEquipmentId" name="equipmentId">
+        <label class="field-label" for="filterEquipmentId">Equipo utilizado</label>
+        <select class="input" id="filterEquipmentId" name="equipmentId">
           <option value="">Cualquier equipo</option>
-          <c:forEach var="eq" items="${equipmentList}">
-            <option value="${eq.id}" <c:if test="${eq.id == filterEquipmentId}">selected</c:if>>
-              <c:out value="${eq.typeLabel}" />: <c:out value="${eq.displayName}" />
+          <c:forEach var="equip" items="${equipmentList}">
+            <option value="${equip.id}" <c:if test="${equip.id == filterEquipmentId}">selected</c:if>>
+              <c:out value="${equip.typeLabel}" />: <c:out value="${equip.displayName}" />
             </option>
           </c:forEach>
         </select>
       </div>
 
       <div class="field">
-        <label for="dateFrom">Desde fecha</label>
-        <input id="dateFrom" name="dateFrom" type="date" value="<c:out value='${filterDateFrom}' />" />
+        <label class="field-label" for="dateFrom">Desde fecha</label>
+        <input class="input" id="dateFrom" name="dateFrom" type="date" value="<c:out value='${filterDateFrom}' />" />
       </div>
 
       <div class="field">
-        <label for="dateTo">Hasta fecha</label>
-        <input id="dateTo" name="dateTo" type="date" value="<c:out value='${filterDateTo}' />" />
+        <label class="field-label" for="dateTo">Hasta fecha</label>
+        <input class="input" id="dateTo" name="dateTo" type="date" value="<c:out value='${filterDateTo}' />" />
       </div>
 
       <div>
@@ -108,7 +111,7 @@
 </section>
 
 <!-- 2. Selección de sesiones en el historial -->
-<section class="card" style="margin-bottom: 1.5rem;">
+<section class="surface-card card" style="margin-bottom: 1.5rem;">
   <form method="get" action="${pageContext.request.contextPath}/app/analisis">
     <input type="hidden" name="coffeeLotId" value="<c:out value='${filterLotId}' />" />
     <input type="hidden" name="roastBatchId" value="<c:out value='${filterBatchId}' />" />
@@ -122,9 +125,9 @@
       <div>
         <span class="badge badge-measured">Selección Comparativa</span>
         <h2 class="card-title" style="margin-top: 0.35rem;">
-          Sesiones Encontradas (<span class="mono">N = <c:out value="${fn:length(filteredSessions)}" /></span>)
+          Sesiones Encontradas (<span class="tabular mono">N = <c:out value="${fn:length(filteredSessions)}" /></span>)
         </h2>
-        <p class="card-subtitle">
+        <p class="field-hint card-subtitle" style="margin-bottom: 0;">
           Marca dos o más sesiones en la primera columna y pulsa <strong>«Comparar sesiones seleccionadas»</strong>.
         </p>
       </div>
@@ -229,15 +232,15 @@
 
 <!-- 3. Comparador lado a lado + Gráfico SVG con ejes/unidades/leyenda/fuente tabular -->
 <c:if test="${comparison.sampleSize >= 2}">
-  <section class="card" style="margin-bottom: 1.5rem;">
+  <section class="surface-card card" style="margin-bottom: 1.5rem;">
     <div class="card-header">
       <div>
         <span class="badge badge-measured">Comparación Multisesión Activa</span>
         <h2 class="card-title" style="margin-top: 0.35rem;">
           Contraste de Parámetros Previstos, Reales, Sensoriales y Afectivos
         </h2>
-        <p class="card-subtitle">
-          Tamaño de muestra comparada: <strong class="mono">N = <c:out value="${comparison.sampleSize}" /> sesiones</strong>.
+        <p class="field-hint card-subtitle" style="margin-bottom: 0;">
+          Tamaño de muestra comparada: <strong class="tabular mono">N = <c:out value="${comparison.sampleSize}" /> sesiones</strong>.
           Unidades explícitas: masa en <span class="mono">g</span>, temperatura en <span class="mono">°C</span>, tiempo en <span class="mono">m:ss</span>, ratio como <span class="mono">1:x</span>.
           Datos faltantes o no medidos representados como <span class="mono">—</span> (nunca <span class="mono">0</span>).
         </p>
@@ -246,10 +249,10 @@
 
     <!-- Advertencias metodológicas de contexto y no-causalidad -->
     <c:if test="${not empty comparison.contextWarnings}">
-      <div class="stack" style="margin-bottom: 1.15rem;">
+      <div class="stack-sm stack" style="margin-bottom: 1.15rem;">
         <c:forEach var="warn" items="${comparison.contextWarnings}">
-          <div class="flash flash-warn" role="status">
-            <strong>Advertencia de comparabilidad:</strong> <c:out value="${warn}" />
+          <div class="alert alert-warn flash flash-warn" role="status" style="margin-bottom: 0;">
+            <div><strong>Advertencia de comparabilidad:</strong> <c:out value="${warn}" /></div>
           </div>
         </c:forEach>
       </div>
@@ -466,12 +469,12 @@
           </tr>
           <tr>
             <td><strong>Preferencia / Agrado (Bloque Afectivo Separado)</strong></td>
-            <td><span class="badge badge-affective">Afectivo</span></td>
+            <td><span class="badge badge-preference badge-affective">Afectivo</span></td>
             <c:forEach var="item" items="${comparison.items}">
               <td>
                 <c:choose>
                   <c:when test="${not empty item.assessment and not empty item.assessment.preferenceRecord}">
-                    Agrado: <strong class="mono"><c:out value="${item.assessment.preferenceRecord.overallLikingDisplay}" /></strong>
+                    Agrado: <strong class="tabular mono"><c:out value="${item.assessment.preferenceRecord.overallLikingDisplay}" /></strong>
                     · <c:out value="${item.assessment.preferenceRecord.wouldRepeatDisplay}" />
                   </c:when>
                   <c:otherwise><span class="mono muted">—</span></c:otherwise>
