@@ -8,9 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crear cuenta — BrewLab</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/brewlab.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/scientific-immersion.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/modules.css">
 </head>
-<body>
+<body class="immersion module-auth">
 <main class="auth-layout">
+  <div class="auth-intro"><span class="eyebrow ion">BREWLAB / SCIENTIFIC IMMERSION</span><p class="auth-statement">El café como<br>campo de estudio.</p><p>Observe el origen. Afine la extracción.<br>Descubra lo que revela cada taza.</p><div class="auth-orbit" aria-hidden="true"><span>ORIGEN</span><span>EXTRACCIÓN</span><span>PERCEPCIÓN</span></div></div>
   <section class="auth-card" aria-labelledby="register-heading">
     <div class="brand-block" style="border-bottom-color: var(--border-hairline); padding-left:0; padding-right:0;">
       <span class="brand-mark" aria-hidden="true">BL</span>

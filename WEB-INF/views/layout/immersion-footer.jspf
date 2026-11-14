@@ -1,0 +1,6 @@
+<%@ page pageEncoding="UTF-8" session="false" %>
+</main>
+<footer class="lab-footer"><span>BREWLAB <span aria-hidden="true">/</span> PRECISIÓN EN CADA EXTRACCIÓN</span><a href="${pageContext.request.contextPath}/app/ajustes">Configuración y respaldo <span aria-hidden="true">↗</span></a></footer>
+<script src="${pageContext.request.contextPath}/assets/js/brewlab.js" defer></script>
+</body>
+</html>

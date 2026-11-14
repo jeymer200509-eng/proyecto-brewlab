@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Laboratorio de Experimentación Controlada"/>
+<c:set var="pageHeading" value="Cuaderno experimental"/>
+<c:set var="moduleKicker" value="08 / HIPÓTESIS Y ENSAYOS"/>
+<c:set var="moduleDescription" value="Cambie una variable. Observe, contraste y documente lo aprendido."/>
+<c:set var="moduleAnchor" value="new-experiment"/>
+<c:set var="moduleAction" value="Diseñar experimento"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<section class="surface-card card" style="margin-bottom: 1rem;">
+<details class="module-guidance"><summary>Guía de lectura y criterios del módulo</summary>
   <div class="card-header" style="margin-bottom: 0;">
     <div>
       <div class="field-hint">Módulo 8 · Experiment Lab</div>
@@ -20,10 +24,10 @@
       <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/analisis">← Volver a Analítica</a>
     </div>
   </div>
-</section>
+</details>
 
 <!-- 1. Crear nuevo Experimento -->
-<section class="surface-card card" style="margin-bottom: 1.5rem;">
+<section id="new-experiment" class="surface-card card hypothesis-workbench" style="margin-bottom: 1.5rem;">
   <div class="card-header">
     <div>
       <span class="badge badge-planned">Diseño Experimental</span>
@@ -142,7 +146,7 @@
 </section>
 
 <!-- 2. Lista de Experimentos registrados -->
-<section class="stack-md stack">
+<section class="experiment-timeline stack-md stack">
   <c:choose>
     <c:when test="${empty experiments}">
       <div class="surface-card card empty-state">
@@ -153,7 +157,7 @@
       <c:forEach var="exp" items="${experiments}">
         <c:set var="expComp" value="${comparisonByExperiment[exp.id]}" />
         <c:set var="expSuggs" value="${suggestionsByExperiment[exp.id]}" />
-        <article class="surface-card card">
+        <article class="surface-card card experiment-entry">
           <div class="card-header">
             <div>
               <div class="cluster" style="margin-bottom: 0.35rem;">

@@ -1,0 +1,12 @@
+.git
+.agents
+.github
+node_modules
+target
+WEB-INF/classes
+WEB-INF/lib
+WEB-INF/data
+WEB-INF/config/brewlab.properties
+db/setup.local.sql
+test-results
+playwright-report

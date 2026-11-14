@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Biblioteca de Cafés (Coffee Library)"/>
+<c:set var="pageHeading" value="Biblioteca de cafés"/>
+<c:set var="moduleKicker" value="02 / ARCHIVO DE MUESTRAS"/>
+<c:set var="moduleDescription" value="Cada origen tiene una historia. Registre sus lotes y siga la evolución de cada tostión."/>
+<c:set var="moduleAnchor" value="form-cafe"/>
+<c:set var="moduleAction" value="Registrar muestra"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
 <section class="surface-card" aria-labelledby="busqueda-cafes-heading">
@@ -37,22 +41,12 @@
       </div>
     </c:when>
     <c:otherwise>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Código / Nombre</th>
-              <th>Origen / Finca</th>
-              <th>Variedad / Proceso</th>
-              <th class="num">Altitud</th>
-              <th>Lotes de Tostión y Edad Actual</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div class="sample-archive">
+
+
             <c:forEach var="lot" items="${lots}">
-              <tr>
-                <td>
+              <article class="sample-file">
+                <div class="record-cell record-cell-1"><span class="record-label">Identidad de muestra</span>
                   <div>
                     <code class="num"><c:out value="${lot.code}"/></code>
                     <c:if test="${lot.demo}">
@@ -66,20 +60,20 @@
                      style="font-weight:650; color: var(--text-primary); text-decoration:underline;">
                     <c:out value="${lot.name}"/>
                   </a>
-                </td>
-                <td>
+                </div>
+                <div class="record-cell record-cell-2"><span class="record-label">Origen y finca</span>
                   <div><c:out value="${lot.originDisplay}"/></div>
                   <div class="field-hint">
                     Finca: <c:out value="${not empty lot.farm ? lot.farm : '—'}"/> ·
                     Prod.: <c:out value="${not empty lot.producer ? lot.producer : '—'}"/>
                   </div>
-                </td>
-                <td>
+                </div>
+                <div class="record-cell record-cell-3"><span class="record-label">Variedad y proceso</span>
                   <div><c:out value="${not empty lot.variety ? lot.variety : '—'}"/></div>
                   <div class="field-hint">Proceso: <c:out value="${not empty lot.process ? lot.process : '—'}"/></div>
-                </td>
-                <td class="num"><c:out value="${lot.altitudeDisplay}"/></td>
-                <td>
+                </div>
+                <div class="record-cell record-cell-4"><span class="record-label">Altitud</span><c:out value="${lot.altitudeDisplay}"/></div>
+                <div class="record-cell record-cell-5"><span class="record-label">Tostiones y edad</span>
                   <c:set var="bList" value="${batchesByLot[lot.id]}"/>
                   <c:choose>
                     <c:when test="${empty bList}">
@@ -104,8 +98,8 @@
                       </div>
                     </c:otherwise>
                   </c:choose>
-                </td>
-                <td>
+                </div>
+                <div class="record-cell record-cell-6"><span class="record-label">Acciones</span>
                   <div class="cluster">
                     <a class="btn btn-primary btn-sm"
                        href="${pageContext.request.contextPath}/app/cafes/lote?id=${fn:escapeXml(lot.id)}">
@@ -116,11 +110,11 @@
                       Editar
                     </a>
                   </div>
-                </td>
-              </tr>
+                </div>
+              </article>
             </c:forEach>
-          </tbody>
-        </table>
+
+
       </div>
     </c:otherwise>
   </c:choose>

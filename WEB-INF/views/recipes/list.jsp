@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Constructor de Recetas y Métodos (Recipe Builder)"/>
+<c:set var="pageHeading" value="Protocolos de preparación"/>
+<c:set var="moduleKicker" value="04 / CATÁLOGO DE RECETAS"/>
+<c:set var="moduleDescription" value="Diseñe una secuencia reproducible. Ajuste dosis, agua, temperatura y vertidos."/>
+<c:set var="moduleAnchor" value="new-recipe"/>
+<c:set var="moduleAction" value="Crear protocolo"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
 <section class="surface-card" aria-labelledby="recipes-list-heading">
@@ -31,23 +35,13 @@
       </div>
     </c:when>
     <c:otherwise>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Receta / Método</th>
-              <th class="num">Dosis / Agua</th>
-              <th class="num">Ratio (1:x)</th>
-              <th class="num">Temp. / Tiempo</th>
-              <th>Pasos y Coherencia</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div class="protocol-catalog">
+
+
             <c:forEach var="r" items="${recipes}">
               <c:set var="wList" value="${warningsByRecipe[r.id]}"/>
-              <tr>
-                <td>
+              <article class="protocol-entry">
+                <div class="record-cell record-cell-1"><span class="record-label">Protocolo</span>
                   <div>
                     <span class="badge badge-planned"><c:out value="${r.method}"/></span>
                     <span class="field-hint tabular">v<c:out value="${r.version}"/></span>
@@ -57,21 +51,21 @@
                      style="font-weight:650; color: var(--text-primary); text-decoration:underline;">
                     <c:out value="${r.name}"/>
                   </a>
-                </td>
-                <td class="num"><c:out value="${r.doseDisplay}"/> / <c:out value="${r.waterDisplay}"/></td>
-                <td class="num">
+                </div>
+                <div class="record-cell record-cell-2"><span class="record-label">Dosis / agua</span><c:out value="${r.doseDisplay}"/> / <c:out value="${r.waterDisplay}"/></div>
+                <div class="record-cell record-cell-3"><span class="record-label">Ratio</span>
                   <span class="badge badge-planned tabular"><c:out value="${r.ratioDisplay}"/></span>
-                </td>
-                <td class="num">
+                </div>
+                <div class="record-cell record-cell-4"><span class="record-label">Temperatura / tiempo</span>
                   <c:out value="${r.temperatureDisplay}"/> · <c:out value="${r.targetTimeDisplay}"/>
-                </td>
-                <td>
+                </div>
+                <div class="record-cell record-cell-5"><span class="record-label">Secuencia</span>
                   <div class="tabular"><strong><c:out value="${fn:length(r.steps)}"/></strong> pasos definidos</div>
                   <c:if test="${not empty wList}">
                     <span class="badge badge-warn"><c:out value="${fn:length(wList)}"/> aviso(s)</span>
                   </c:if>
-                </td>
-                <td>
+                </div>
+                <div class="record-cell record-cell-6"><span class="record-label">Acciones</span>
                   <div class="cluster">
                     <a class="btn btn-primary btn-sm"
                        href="${pageContext.request.contextPath}/app/recetas/detalle?id=${fn:escapeXml(r.id)}">
@@ -90,17 +84,17 @@
                       <button type="submit" class="btn btn-secondary btn-sm">Duplicar</button>
                     </form>
                   </div>
-                </td>
-              </tr>
+                </div>
+              </article>
             </c:forEach>
-          </tbody>
-        </table>
+
+
       </div>
     </c:otherwise>
   </c:choose>
 </section>
 
-<section class="surface-card" aria-labelledby="new-recipe-heading">
+<section class="surface-card" id="new-recipe" aria-labelledby="new-recipe-heading">
   <div class="card-header">
     <div>
       <h2 id="new-recipe-heading">Crear nueva receta</h2>

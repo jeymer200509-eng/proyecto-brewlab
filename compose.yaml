@@ -1,0 +1,12 @@
+services:
+  brewlab:
+    build: .
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - brewlab-data:/usr/local/tomcat/webapps/ROOT/WEB-INF/data
+      - brewlab-config:/usr/local/tomcat/webapps/ROOT/WEB-INF/config
+    restart: unless-stopped
+volumes:
+  brewlab-data:
+  brewlab-config:

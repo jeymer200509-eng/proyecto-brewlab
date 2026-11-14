@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="${lot.code} — ${lot.name}"/>
+<c:set var="pageHeading" value="Ficha de muestra"/>
+<c:set var="moduleKicker" value="02 / TRAZABILIDAD"/>
+<c:set var="moduleDescription" value="Origen, proceso y tostiones de un mismo café."/>
+<c:set var="moduleAnchor" value="form-batch"/>
+<c:set var="moduleAction" value="Registrar tostión"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
 <section class="surface-card" aria-labelledby="ficha-lot-heading">

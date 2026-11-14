@@ -36,6 +36,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
     <!-- Persistencia -->
     <dependency>
       <groupId>com.mysql</groupId>
@@ -199,7 +205,7 @@
         <version>3.4.0</version>
         <configuration>
           <warSourceDirectory>${project.basedir}</warSourceDirectory>
-          <warSourceExcludes>src/**,e2e/**,db/**,scripts/**,target/**,node_modules/**,test-results/**,playwright-report/**,.agents/**,.mvn/**,.git/**,WEB-INF/classes/**,WEB-INF/lib/**,WEB-INF/data/**,WEB-INF/config/brewlab.properties,pom.xml,mvnw,mvnw.cmd,package.json,package-lock.json,playwright.config.js,README.md,.gitignore,.gitattributes</warSourceExcludes>
+          <warSourceExcludes>src/**,e2e/**,docs/**,docker/**,.github/**,Dockerfile,compose.yaml,.dockerignore,db/**,scripts/**,target/**,node_modules/**,test-results/**,playwright-report/**,.agents/**,.mvn/**,.git/**,WEB-INF/classes/**,WEB-INF/lib/**,WEB-INF/data/**,WEB-INF/config/brewlab.properties,pom.xml,mvnw,mvnw.cmd,package.json,package-lock.json,playwright.config.js,README.md,.gitignore,.gitattributes</warSourceExcludes>
           <failOnMissingWebXml>true</failOnMissingWebXml>
         </configuration>
       </plugin>

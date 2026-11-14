@@ -1,0 +1,48 @@
+<%@ page pageEncoding="UTF-8" session="false" %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title><c:out value="${pageTitle}"/></title>
+  <link rel="manifest" href="${pageContext.request.contextPath}/manifest.webmanifest">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/brewlab.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/scientific-immersion.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/modules.css">
+</head>
+<body class="immersion module-${fn:escapeXml(activeNav)}">
+<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+<header class="lab-header">
+  <div class="lab-masthead">
+    <a class="lab-brand" href="${pageContext.request.contextPath}/app/inicio" aria-label="BrewLab, Panel de Laboratorio">
+      <svg viewBox="0 0 36 40" aria-hidden="true"><path d="M12 3h12M15 3v12L5 32q-2 5 4 5h18q6 0 4-5L21 15V3M10 27h16M14 21h8"/></svg>
+      <span>BrewLab<span class="brand-caption">SCIENTIFIC IMMERSION</span></span>
+    </a>
+    <span class="lab-edition">CAFÉ DE ESPECIALIDAD / LABORATORIO DIGITAL</span>
+    <c:if test="${not empty currentUser}">
+      <details class="lab-account">
+        <summary><span class="account-initial"><c:out value="${currentUser.initial}"/></span><span class="account-name"><c:out value="${currentUser.displayName}"/></span><span aria-hidden="true">⌄</span></summary>
+        <div class="account-menu">
+          <a href="${pageContext.request.contextPath}/app/ajustes">Configuración y respaldo</a>
+          <form method="post" action="${pageContext.request.contextPath}/auth/salir">
+            <input type="hidden" name="_csrf" value="${fn:escapeXml(csrfToken)}">
+            <button type="submit" class="btn text-button">Cerrar sesión</button>
+          </form>
+        </div>
+      </details>
+    </c:if>
+  </div>
+  <nav class="lab-nav" aria-label="Secciones del laboratorio">
+    <a class="nav-link" ${activeNav == 'inicio' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/inicio">Panel de laboratorio</a>
+    <c:if test="${not empty applicationScope.navCafesEnabled}"><a class="nav-link" ${activeNav == 'cafes' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/cafes">Cafés</a></c:if>
+    <c:if test="${not empty applicationScope.navEquiposEnabled}"><a class="nav-link" ${activeNav == 'equipos' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/equipos">Equipos y agua</a><a class="nav-link" ${activeNav == 'recetas' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/recetas">Recetas</a></c:if>
+    <c:if test="${not empty applicationScope.navPreparacionEnabled}"><a class="nav-link" ${activeNav == 'preparacion' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/preparacion">Asistente</a></c:if>
+    <c:if test="${not empty applicationScope.navCatacionEnabled}"><a class="nav-link" ${activeNav == 'catacion' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/catacion">Sensorial</a></c:if>
+    <c:if test="${not empty applicationScope.navAnalisisEnabled}"><a class="nav-link" ${activeNav == 'analisis' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/analisis">Comparador</a><a class="nav-link" ${activeNav == 'experimentos' ? 'aria-current="page"' : ''} href="${pageContext.request.contextPath}/app/experimentos">Experimentos</a></c:if>
+  </nav>
+</header>
+<main id="contenido-principal" class="lab-main">
+<c:if test="${not empty flashMessage}">
+  <div class="lab-notice ${flashType == 'error' ? 'lab-notice-error' : ''}" role="status"><c:out value="${flashMessage}"/></div>
+</c:if>

@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Evaluación Sensorial y Explorador Jerárquico"/>
+<c:set var="pageHeading" value="Laboratorio sensorial"/>
+<c:set var="moduleKicker" value="06 / MAPA DE PERCEPCIÓN"/>
+<c:set var="moduleDescription" value="Explore familias de sabores y registre intensidades. Su preferencia tiene su propio espacio."/>
+<c:set var="moduleAnchor" value="sensory-workspace"/>
+<c:set var="moduleAction" value="Evaluar una taza"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<section class="surface-card card" style="margin-bottom: 1rem;">
+<details class="module-guidance"><summary>Guía de lectura y criterios del módulo</summary>
   <div class="card-header" style="margin-bottom: 0;">
     <div>
       <div class="field-hint">Módulos 5 y 6 · Sensory Lab &amp; Flavor Explorer</div>
@@ -21,7 +25,7 @@
       <span class="badge badge-planned mono"><c:out value="${taxonomyVersion}" /></span>
     </div>
   </div>
-</section>
+</details>
 
 <div class="alert alert-info flash flash-info" role="note" style="margin-bottom: 1.25rem;">
   <div>
@@ -30,11 +34,11 @@
   </div>
 </div>
 
-<form method="post" action="${pageContext.request.contextPath}/app/catacion" data-once="true">
+<form id="sensory-workspace" method="post" action="${pageContext.request.contextPath}/app/catacion" data-once="true">
   <input type="hidden" name="_csrf" value="${csrfToken}" />
   <input type="hidden" name="action" value="createAssessment" />
 
-  <div class="grid-2" style="align-items: start; margin-bottom: 1.5rem;">
+  <div class="sensory-workspace">
     <!-- COLUMNA IZQUIERDA: Vínculo de trazabilidad + Atributos Descriptivos + Bloque Afectivo Separado -->
     <div class="stack-md stack">
       <!-- 1. Trazabilidad y contexto de muestra -->
@@ -449,7 +453,7 @@
           <c:set var="asLot" value="${lotMap[assess.coffeeLotId]}" />
           <c:set var="asBatch" value="${batchMap[assess.roastBatchId]}" />
           <c:set var="asSession" value="${sessionMap[assess.brewSessionId]}" />
-          <article class="surface-card card" style="background: rgba(255,255,255,0.58);">
+          <article class="surface-card card" style="background: var(--bg-subtle);">
             <div class="card-header">
               <div>
                 <div class="cluster" style="margin-bottom: 0.3rem;">

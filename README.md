@@ -1,4 +1,17 @@
-# BrewLab — Laboratorio Digital de Café de Especialidad (V1.0)
+# BrewLab — Scientific Immersion
+
+Interfaz científica para todos los módulos. Inicio local con Java 21 y Tomcat 9:
+
+```sh
+docker compose up --build -d
+```
+
+Abrir **http://localhost:8080**. Configuración y datos persisten en volúmenes locales.
+Consulte [ejecución local](docs/LOCAL_SERVER.md), [sistema de diseño](docs/SCIENTIFIC_IMMERSION.md) y [validación](docs/DASHBOARD_REVIEW.md).
+
+La arquitectura sigue siendo Servlets/JSP + JWT + JDBC + MySQL/H2; no se ha migrado a Spring/Thymeleaf/PostgreSQL.
+
+## Documentación de la base funcional (V1.0)
 
 > **Aviso de marca:** *BrewLab* se utiliza exclusivamente como nombre de trabajo interno para este proyecto técnico. No se asume su disponibilidad legal ni registral.
 
