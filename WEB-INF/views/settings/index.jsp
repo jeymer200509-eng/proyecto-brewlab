@@ -40,7 +40,7 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="timerTheme">Tema visual del cronómetro (Brew Assistant)</label>
+        <label class="field-label" for="timerTheme">Tema visual del cronómetro</label>
         <select class="input" id="timerTheme" name="timerTheme">
           <option value="auto" ${settings.timerThemeCode == 'auto' ? 'selected' : ''}>Automático (grafito científico)</option>
           <option value="claro" ${settings.timerThemeCode == 'claro' ? 'selected' : ''}>Claro de alto contraste</option>

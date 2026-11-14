@@ -78,7 +78,7 @@
 
         <div class="form-grid form-grid-2" style="margin-top: 0.75rem;">
           <div class="field">
-            <label class="field-label" for="coffeeLotId">Lote de café (CoffeeLot)</label>
+            <label class="field-label" for="coffeeLotId">Lote de café</label>
             <select class="input" id="coffeeLotId" name="coffeeLotId">
               <option value="">— Automático desde tueste/sesión o sin lote —</option>
               <c:forEach var="lot" items="${coffeeLots}">
@@ -89,7 +89,7 @@
             </select>
           </div>
           <div class="field">
-            <label class="field-label" for="roastBatchId">Lote de tostión (RoastBatch)</label>
+            <label class="field-label" for="roastBatchId">Lote de tostión</label>
             <select class="input" id="roastBatchId" name="roastBatchId">
               <option value="">— Opcional —</option>
               <c:forEach var="rb" items="${roastBatches}">
@@ -164,11 +164,11 @@
         </div>
       </section>
 
-      <!-- 3. Bloque Afectivo Estrictamente Separado (PreferenceRecord) -->
+      <!-- 3. Bloque Afectivo Estrictamente Separado -->
       <section class="surface-card card" style="border-color: rgba(155, 77, 150, 0.35);">
         <div class="card-header">
           <div>
-            <span class="badge badge-preference badge-affective">3 · Bloque Afectivo Separado (PreferenceRecord)</span>
+            <span class="badge badge-preference badge-affective">3 · Bloque Afectivo Separado</span>
             <h2 class="card-title" style="margin-top: 0.35rem;">Preferencia y Agrado del Evaluador</h2>
             <p class="field-hint card-subtitle" style="margin-bottom: 0;">
               Separado del análisis descriptivo: mide cuánto te gustó esta taza y si repetirías la receta en este contexto.

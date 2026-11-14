@@ -154,7 +154,7 @@
   <section class="surface-card" aria-labelledby="water-heading">
     <div class="card-header">
       <div>
-        <h2 id="water-heading">Perfiles de agua (WaterProfile)</h2>
+        <h2 id="water-heading">Perfiles de agua</h2>
         <p class="field-hint" style="margin-bottom:0;">
           Registra solo los parámetros medidos o conocidos. La ausencia de dato se conserva como <code>null</code> (—), nunca como 0.
         </p>

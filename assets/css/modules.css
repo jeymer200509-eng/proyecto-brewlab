@@ -200,3 +200,10 @@ summary { cursor: pointer; min-height: 44px; padding: .65rem 0; }
 @media(prefers-reduced-transparency:reduce) {
   .module-auth .auth-card { background: #141d24; backdrop-filter: none; }
 }
+/* Prevent intrinsic table/input widths from expanding grid tracks on small screens. */
+.surface-card,.timer-stage,.calibration-bench > *,.settings-workspace > * { min-width: 0; }
+:where(.surface-card,.timer-stage) :where(h2,h3,p,dd) { overflow-wrap: anywhere; }
+@media(max-width:400px) {
+  .sample-file { grid-template-columns: minmax(0,1fr); }
+  .sample-file .record-cell { grid-column: 1; }
+}

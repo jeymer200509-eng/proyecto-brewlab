@@ -38,7 +38,7 @@
   <form method="get" action="${pageContext.request.contextPath}/app/analisis">
     <div class="form-grid form-grid-4">
       <div class="field">
-        <label class="field-label" for="filterLotId">Café (CoffeeLot)</label>
+        <label class="field-label" for="filterLotId">Café</label>
         <select class="input" id="filterLotId" name="coffeeLotId">
           <option value="">Todos los lotes</option>
           <c:forEach var="lot" items="${coffeeLots}">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="filterBatchId">Tostión (RoastBatch)</label>
+        <label class="field-label" for="filterBatchId">Tostión</label>
         <select class="input" id="filterBatchId" name="roastBatchId">
           <option value="">Todos los tuestes</option>
           <c:forEach var="rb" items="${roastBatches}">
@@ -280,7 +280,7 @@
         <strong style="font-size: 0.92rem;">
           Gráfico SVG — Perfil Sensorial Descriptivo Comparado (Eje Y: Intensidad en escala 0 a <c:out value="${comparison.sensoryChartMax}" /> pts · Muestra N = <c:out value="${comparison.sampleSize}" />)
         </strong>
-        <span class="mono muted" style="font-size: 0.78rem;">Fuente: tabla comparativa inferior · Null = Sin barra (—)</span>
+        <span class="mono muted" style="font-size: 0.78rem;">Fuente: tabla comparativa inferior · Sin medición = Sin barra (—)</span>
       </div>
 
       <svg viewBox="0 0 760 220" role="img"
@@ -355,7 +355,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Lote de café (CoffeeLot)</strong></td>
+            <td><strong>Lote de café</strong></td>
             <td><span class="badge badge-measured">Contexto</span></td>
             <c:forEach var="item" items="${comparison.items}">
               <c:set var="cLot" value="${lotMap[item.session.coffeeLotId]}" />
@@ -368,7 +368,7 @@
             </c:forEach>
           </tr>
           <tr>
-            <td><strong>Lote de tostión (RoastBatch)</strong></td>
+            <td><strong>Lote de tostión</strong></td>
             <td><span class="badge badge-measured">Contexto</span></td>
             <c:forEach var="item" items="${comparison.items}">
               <c:set var="cBatch" value="${batchMap[item.session.roastBatchId]}" />

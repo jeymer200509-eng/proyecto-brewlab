@@ -153,11 +153,11 @@
   </details>
 </section>
 
-<!-- PASOS ORDENADOS (RecipeStep) -->
+<!-- PASOS ORDENADOS -->
 <section class="surface-card" id="pasos-receta" aria-labelledby="steps-heading">
   <div class="card-header">
     <div>
-      <h2 id="steps-heading">Pasos ordenados de preparación (RecipeStep)</h2>
+      <h2 id="steps-heading">Pasos ordenados de preparación</h2>
       <p class="field-hint" style="margin-bottom:0;">
         Crea, edita, duplica, reordena (↑/↓) o elimina etapas. Cada paso define inicio objetivo, duración opcional, agua del paso y agua acumulada objetivo.
       </p>

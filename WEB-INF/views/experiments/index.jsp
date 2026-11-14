@@ -49,7 +49,7 @@
                placeholder="Ej.: Efecto de molienda (20 vs 24 clics) en V60" />
       </div>
       <div class="field">
-        <label class="field-label" for="expLotId">Lote de café (CoffeeLot)</label>
+        <label class="field-label" for="expLotId">Lote de café</label>
         <select class="input" id="expLotId" name="coffeeLotId">
           <option value="">— Opcional —</option>
           <c:forEach var="lot" items="${coffeeLots}">
@@ -58,7 +58,7 @@
         </select>
       </div>
       <div class="field">
-        <label class="field-label" for="expBatchId">Lote de tostión (RoastBatch)</label>
+        <label class="field-label" for="expBatchId">Lote de tostión</label>
         <select class="input" id="expBatchId" name="roastBatchId">
           <option value="">— Opcional —</option>
           <c:forEach var="rb" items="${roastBatches}">

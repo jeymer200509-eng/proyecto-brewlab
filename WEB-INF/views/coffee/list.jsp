@@ -36,7 +36,7 @@
       <div class="empty-state">
         <h3>Aún no hay lotes de café que coincidan</h3>
         <p style="color: var(--text-secondary); font-size:0.88rem;">
-          Registra un lote de café abajo. Los campos desconocidos pueden dejarse en blanco y se conservarán como <code>null</code> (nunca como cero).
+          Registra un lote de café abajo. Los campos desconocidos pueden dejarse en blanco y se conservarán como dato no registrado (—).
         </p>
       </div>
     </c:when>
@@ -126,11 +126,11 @@
       <h2 id="nuevo-cafe-heading">
         <c:choose>
           <c:when test="${not empty editLot and not empty editLot.id}">Editar lote de café: <c:out value="${editLot.name}"/></c:when>
-          <c:otherwise>Registrar nuevo lote de café (CoffeeLot)</c:otherwise>
+          <c:otherwise>Registrar nuevo lote de café</c:otherwise>
         </c:choose>
       </h2>
       <p class="field-hint" style="margin-bottom:0;">
-        Solo el código y el nombre son obligatorios. Cualquier campo desconocido se conserva vacío (<code>null</code>).
+        Solo el código y el nombre son obligatorios. Cualquier campo desconocido se conserva vacío (—).
       </p>
     </div>
     <c:if test="${not empty editLot}">

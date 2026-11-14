@@ -369,7 +369,7 @@
           </div>
 
           <div class="field">
-            <label class="field-label" for="prep-lot">Lote de café (CoffeeLot)</label>
+            <label class="field-label" for="prep-lot">Lote de café</label>
             <select class="input" id="prep-lot" name="coffeeLotId">
               <option value="">— Usar el de la receta / ninguno —</option>
               <c:forEach var="lot" items="${coffeeLots}">
@@ -381,7 +381,7 @@
           </div>
 
           <div class="field">
-            <label class="field-label" for="prep-batch">Lote de tostión (RoastBatch)</label>
+            <label class="field-label" for="prep-batch">Lote de tostión</label>
             <select class="input" id="prep-batch" name="roastBatchId">
               <option value="">— Seleccionar lote de tostión —</option>
               <c:forEach var="b" items="${roastBatches}">

@@ -90,7 +90,7 @@
 <section class="surface-card" aria-labelledby="batches-heading">
   <div class="card-header">
     <div>
-      <h2 id="batches-heading">Lotes de tostión asociados (RoastBatch)</h2>
+      <h2 id="batches-heading">Lotes de tostión asociados</h2>
       <p class="field-hint" style="margin-bottom:0;">
         Los días desde tostión se calculan dinámicamente como diferencia calendario entre hoy (<code class="num"><c:out value="${todayIso}"/></code>) y la fecha del lote elegido. No existe una ventana universal de frescura.
       </p>
@@ -203,7 +203,7 @@
           <c:when test="${not empty editBatch and not empty editBatch.id}">
             Editar lote de tostión: <c:out value="${editBatch.batchCode}"/>
           </c:when>
-          <c:otherwise>Registrar nuevo lote de tostión (RoastBatch) para <c:out value="${lot.code}"/></c:otherwise>
+          <c:otherwise>Registrar nuevo lote de tostión para <c:out value="${lot.code}"/></c:otherwise>
         </c:choose>
       </h2>
       <p class="field-hint" style="margin-bottom:0;">
