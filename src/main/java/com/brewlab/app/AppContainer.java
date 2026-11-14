@@ -3,9 +3,12 @@ package com.brewlab.app;
 import com.brewlab.data.db.DataSourceFactory;
 import com.brewlab.data.db.SchemaMigrator;
 import com.brewlab.data.repositories.CoffeeLotRepository;
+import com.brewlab.data.repositories.EquipmentRepository;
+import com.brewlab.data.repositories.RecipeRepository;
 import com.brewlab.data.repositories.RoastBatchRepository;
 import com.brewlab.data.repositories.UserRepository;
 import com.brewlab.data.repositories.UserSettingsRepository;
+import com.brewlab.data.repositories.WaterProfileRepository;
 import com.brewlab.security.JwtService;
 import com.brewlab.security.PasswordHasher;
 
@@ -27,6 +30,9 @@ public final class AppContainer implements AutoCloseable {
     private final UserSettingsRepository userSettingsRepository;
     private final CoffeeLotRepository coffeeLotRepository;
     private final RoastBatchRepository roastBatchRepository;
+    private final EquipmentRepository equipmentRepository;
+    private final WaterProfileRepository waterProfileRepository;
+    private final RecipeRepository recipeRepository;
 
     public AppContainer(AppConfig config, DataSourceFactory.ManagedDataSource managedDataSource, Clock clock) {
         this.config = config;
@@ -42,6 +48,9 @@ public final class AppContainer implements AutoCloseable {
         this.userSettingsRepository = new UserSettingsRepository(ds);
         this.coffeeLotRepository = new CoffeeLotRepository(ds);
         this.roastBatchRepository = new RoastBatchRepository(ds);
+        this.equipmentRepository = new EquipmentRepository(ds);
+        this.waterProfileRepository = new WaterProfileRepository(ds);
+        this.recipeRepository = new RecipeRepository(ds);
     }
 
     public static AppContainer from(ServletContext ctx) {
@@ -94,6 +103,18 @@ public final class AppContainer implements AutoCloseable {
 
     public RoastBatchRepository getRoastBatchRepository() {
         return roastBatchRepository;
+    }
+
+    public EquipmentRepository getEquipmentRepository() {
+        return equipmentRepository;
+    }
+
+    public WaterProfileRepository getWaterProfileRepository() {
+        return waterProfileRepository;
+    }
+
+    public RecipeRepository getRecipeRepository() {
+        return recipeRepository;
     }
 
     @Override

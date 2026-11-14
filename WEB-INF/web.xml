@@ -66,6 +66,25 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>EquipmentWaterServlet</servlet-name>
+    <servlet-class>com.brewlab.features.equipment.EquipmentWaterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EquipmentWaterServlet</servlet-name>
+    <url-pattern>/app/equipos</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RecipeServlet</servlet-name>
+    <servlet-class>com.brewlab.features.recipes.RecipeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecipeServlet</servlet-name>
+    <url-pattern>/app/recetas</url-pattern>
+    <url-pattern>/app/recetas/detalle</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SettingsServlet</servlet-name>
     <servlet-class>com.brewlab.features.settings.SettingsServlet</servlet-class>
   </servlet>

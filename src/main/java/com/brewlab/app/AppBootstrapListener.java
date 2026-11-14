@@ -22,6 +22,7 @@ public final class AppBootstrapListener implements ServletContextListener {
         AppContainer container = new AppContainer(config, mds, clock);
         ctx.setAttribute(AppContainer.CONTEXT_ATTR, container);
         ctx.setAttribute("navCafesEnabled", Boolean.TRUE);
+        ctx.setAttribute("navEquiposEnabled", Boolean.TRUE);
     }
 
     @Override
