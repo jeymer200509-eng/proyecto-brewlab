@@ -30,6 +30,7 @@ public final class SettingsServlet extends HttpServlet {
         req.setAttribute("dbUrlSummary", container.getManagedDataSource().getJdbcUrlSummary());
         req.setAttribute("dbUsingFallback", Boolean.valueOf(container.getManagedDataSource().isUsingFallback()));
         req.setAttribute("schemaVersion", Integer.valueOf(container.getSchemaVersion()));
+        req.setAttribute("backupSectionEnabled", Boolean.TRUE);
 
         WebSupport.render(req, resp, "ajustes", "Configuración — BrewLab", "settings/index.jsp");
     }

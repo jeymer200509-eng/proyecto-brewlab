@@ -68,6 +68,10 @@ public final class RoastBatch {
         return batchCode;
     }
 
+    public String getCode() {
+        return batchCode;
+    }
+
     public LocalDate getRoastDate() {
         return roastDate;
     }

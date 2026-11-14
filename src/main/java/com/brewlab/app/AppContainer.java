@@ -1,5 +1,7 @@
 package com.brewlab.app;
 
+import com.brewlab.data.backup.BackupService;
+import com.brewlab.data.backup.DemoDataSeeder;
 import com.brewlab.data.db.DataSourceFactory;
 import com.brewlab.data.db.SchemaMigrator;
 import com.brewlab.data.repositories.BrewSessionRepository;
@@ -39,6 +41,8 @@ public final class AppContainer implements AutoCloseable {
     private final BrewSessionRepository brewSessionRepository;
     private final SensoryRepository sensoryRepository;
     private final ExperimentRepository experimentRepository;
+    private final BackupService backupService;
+    private final DemoDataSeeder demoDataSeeder;
 
     public AppContainer(AppConfig config, DataSourceFactory.ManagedDataSource managedDataSource, Clock clock) {
         this.config = config;
@@ -61,6 +65,16 @@ public final class AppContainer implements AutoCloseable {
         this.sensoryRepository = new SensoryRepository(ds);
         this.sensoryRepository.seedDefaultTaxonomyIfNeeded();
         this.experimentRepository = new ExperimentRepository(ds);
+        this.backupService = new BackupService(
+                ds, coffeeLotRepository, roastBatchRepository, equipmentRepository,
+                waterProfileRepository, recipeRepository, brewSessionRepository,
+                sensoryRepository, experimentRepository
+        );
+        this.demoDataSeeder = new DemoDataSeeder(
+                coffeeLotRepository, roastBatchRepository, equipmentRepository,
+                waterProfileRepository, recipeRepository, brewSessionRepository,
+                sensoryRepository, experimentRepository
+        );
     }
 
     public static AppContainer from(ServletContext ctx) {
@@ -137,6 +151,14 @@ public final class AppContainer implements AutoCloseable {
 
     public ExperimentRepository getExperimentRepository() {
         return experimentRepository;
+    }
+
+    public BackupService getBackupService() {
+        return backupService;
+    }
+
+    public DemoDataSeeder getDemoDataSeeder() {
+        return demoDataSeeder;
     }
 
     @Override

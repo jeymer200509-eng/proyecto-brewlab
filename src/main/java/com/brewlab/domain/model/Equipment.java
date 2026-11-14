@@ -66,6 +66,10 @@ public final class Equipment {
         return name;
     }
 
+    public String getDisplayName() {
+        return name;
+    }
+
     public String getSettingsScale() {
         return settingsScale;
     }

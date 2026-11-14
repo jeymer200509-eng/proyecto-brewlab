@@ -69,6 +69,10 @@ public final class UserSettings {
         return timerTheme.getCode();
     }
 
+    public String getDefaultSensoryScale() {
+        return "1-5";
+    }
+
     /** {@code null} si nunca se guardaron (se usan los valores por defecto). */
     public Instant getUpdatedAt() {
         return updatedAt;

@@ -129,6 +129,15 @@
     <url-pattern>/app/ajustes</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>BackupServlet</servlet-name>
+    <servlet-class>com.brewlab.features.backup.BackupServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BackupServlet</servlet-name>
+    <url-pattern>/app/respaldo</url-pattern>
+  </servlet-mapping>
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
