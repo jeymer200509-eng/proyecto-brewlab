@@ -94,6 +94,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>SensoryLabServlet</servlet-name>
+    <servlet-class>com.brewlab.features.sensory.SensoryLabServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SensoryLabServlet</servlet-name>
+    <url-pattern>/app/catacion</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SettingsServlet</servlet-name>
     <servlet-class>com.brewlab.features.settings.SettingsServlet</servlet-class>
   </servlet>

@@ -29,7 +29,8 @@ public final class SchemaMigrator {
             "V001__base_auth_and_settings.sql",
             "V002__coffee_library.sql",
             "V003__equipment_water_and_recipes.sql",
-            "V004__brew_assistant.sql"
+            "V004__brew_assistant.sql",
+            "V005__sensory_lab.sql"
     ));
 
     private final DataSource dataSource;
