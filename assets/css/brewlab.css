@@ -1,0 +1,764 @@
+/* ==========================================================================
+   BrewLab — Sistema de Diseño (Apple Fluid Interface Principles + Coffee Lab)
+   Paleta: Espresso, Café tostado, Crema cálido, Caramelo y Verde Salvia.
+   ========================================================================== */
+
+:root {
+  /* Paleta Laboratorio Contemporáneo de Café */
+  --bg-canvas: #F6F2EB;
+  --bg-surface: #FDFBF7;
+  --bg-elevated: rgba(253, 251, 247, 0.84);
+  --bg-subtle: #EFE9DF;
+  --bg-sidebar: rgba(28, 22, 19, 0.94);
+
+  --text-primary: #1C1613;
+  --text-secondary: #4E4039;
+  --text-muted: #76665D;
+  --text-on-dark: #F7F3EC;
+  --text-on-dark-muted: #B8ABA0;
+
+  --accent-espresso: #231A15;
+  --accent-coffee: #3D2B22;
+  --accent-caramel: #B56531;
+  --accent-caramel-soft: rgba(181, 101, 49, 0.14);
+  --accent-sage: #3B6654;
+  --accent-sage-soft: rgba(59, 102, 84, 0.14);
+
+  --status-warn: #9E5814;
+  --status-warn-bg: #FDF3E6;
+  --status-error: #9E2A2B;
+  --status-error-bg: #FCEEEE;
+  --status-info: #2C556E;
+  --status-info-bg: #ECF4F8;
+
+  --border-hairline: rgba(28, 22, 19, 0.10);
+  --border-strong: rgba(28, 22, 19, 0.22);
+  --border-glass-top: rgba(255, 255, 255, 0.55);
+
+  --shadow-sm: 0 1px 2px rgba(28, 22, 19, 0.05), 0 2px 6px rgba(28, 22, 19, 0.04);
+  --shadow-md: 0 4px 14px rgba(28, 22, 19, 0.07), 0 1px 3px rgba(28, 22, 19, 0.05);
+  --shadow-lg: 0 14px 34px rgba(28, 22, 19, 0.12), 0 2px 8px rgba(28, 22, 19, 0.06);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+
+  /* Curvas inspiradas en amortiguación crítica (Apple damping = 1.0, response ~ 0.35s) */
+  --spring-crit: cubic-bezier(0.22, 1, 0.36, 1);
+  --press-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  font: 100%/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-canvas);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+}
+
+/* --- Tipografía óptica (Apple Typography WWDC) --- */
+h1, h2, h3, h4 {
+  margin: 0 0 0.5rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  color: var(--text-primary);
+  font-optical-sizing: auto;
+}
+
+h1, .display-title {
+  font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  font-weight: 650;
+}
+
+h2 {
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  font-weight: 620;
+}
+
+h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 0.75rem 0;
+}
+
+/* Números tabulares obligatorios en cronómetro y mediciones de laboratorio */
+.tabular, .metric-value, .timer-digits, table td.num, table th.num, code.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* --- Foco visible y accesibilidad --- */
+:focus-visible {
+  outline: 2px solid var(--accent-caramel);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 1000;
+  padding: 0.5rem 0.9rem;
+  background: var(--accent-espresso);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* --- Layout principal de aplicación de trabajo --- */
+.app-shell {
+  display: grid;
+  grid-template-columns: 16.25rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  background: var(--bg-sidebar);
+  backdrop-filter: blur(22px) saturate(160%);
+  color: var(--text-on-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem 0.95rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.35rem 0.6rem 1rem 0.6rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.9rem;
+}
+
+.brand-mark {
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.55rem;
+  background: linear-gradient(145deg, var(--accent-caramel), #8C471B);
+  color: #FFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.brand-title {
+  font-weight: 650;
+  font-size: 1.02rem;
+  letter-spacing: -0.015em;
+  color: var(--text-on-dark);
+  line-height: 1.15;
+}
+
+.brand-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-on-dark-muted);
+  letter-spacing: 0.02em;
+}
+
+.nav-section-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-on-dark-muted);
+  padding: 0.6rem 0.65rem 0.3rem 0.65rem;
+  font-weight: 600;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius-sm);
+  color: #DFD6CC;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: background-color 140ms var(--spring-crit), color 140ms var(--spring-crit), transform 90ms var(--press-ease);
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFF;
+}
+
+.nav-link:active, .nav-link.is-pressing {
+  transform: scale(0.975);
+}
+
+.nav-link.is-active {
+  background: rgba(181, 101, 49, 0.26);
+  color: #FFF;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.sidebar-footer {
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.user-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.45rem;
+}
+
+.user-avatar {
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--accent-sage);
+  color: #FFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 650;
+  font-size: 0.82rem;
+}
+
+.user-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.user-name {
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-email {
+  font-size: 0.72rem;
+  color: var(--text-on-dark-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Área principal y barra superior translúcida (Apple Materials §12) --- */
+.app-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--bg-elevated);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border-hairline);
+  box-shadow: inset 0 1px 0 var(--border-glass-top);
+  padding: 0.85rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.app-content {
+  padding: 1.5rem 1.75rem 3rem 1.75rem;
+  max-width: 78rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* --- Tarjetas sobrias y superficies --- */
+.surface-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem 1.35rem;
+}
+
+.surface-card + .surface-card {
+  margin-top: 1rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+  flex-wrap: wrap;
+}
+
+/* --- Grillas utilitarias --- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.9rem;
+}
+
+.stack-md > * + * {
+  margin-top: 1rem;
+}
+
+.stack-sm > * + * {
+  margin-top: 0.55rem;
+}
+
+.cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* --- Botones con respuesta inmediata en pointer-down (Apple §1) --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.52rem 0.95rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 95ms var(--press-ease), background-color 140ms var(--spring-crit), border-color 140ms var(--spring-crit), box-shadow 140ms var(--spring-crit);
+}
+
+.btn:active, .btn.is-pressing {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--accent-espresso);
+  color: var(--text-on-dark);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+.btn-primary:hover {
+  background: var(--accent-coffee);
+}
+
+.btn-caramel {
+  background: var(--accent-caramel);
+  color: #FFF;
+}
+.btn-caramel:hover {
+  background: #9E5425;
+}
+
+.btn-sage {
+  background: var(--accent-sage);
+  color: #FFF;
+}
+.btn-sage:hover {
+  background: #305545;
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+.btn-secondary:hover {
+  background: var(--bg-subtle);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.btn-ghost:hover {
+  background: rgba(28, 22, 19, 0.06);
+}
+
+.btn-danger {
+  background: var(--status-error-bg);
+  color: var(--status-error);
+  border-color: rgba(158, 42, 43, 0.28);
+}
+.btn-danger:hover {
+  background: #F8DCDC;
+}
+
+.btn-lg {
+  padding: 0.78rem 1.35rem;
+  font-size: 0.98rem;
+  border-radius: var(--radius-md);
+}
+
+.btn-sm {
+  padding: 0.34rem 0.68rem;
+  font-size: 0.8rem;
+}
+
+/* --- Separación visual de tipos epistémicos de datos (Regla B / Sección 11) --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Dato previsto (Receta / Objetivo) */
+.badge-planned {
+  background: #EAE3D8;
+  color: var(--accent-coffee);
+  border: 1px solid rgba(61, 43, 34, 0.18);
+}
+
+/* Dato medido (Real registrado en sesión o instrumento) */
+.badge-measured {
+  background: var(--accent-sage-soft);
+  color: #274A3C;
+  border: 1px solid rgba(59, 102, 84, 0.28);
+}
+
+/* Dato estimado (Sugerencia basada en reglas / hipótesis) */
+.badge-estimated {
+  background: var(--accent-caramel-soft);
+  color: #87461C;
+  border: 1px solid rgba(181, 101, 49, 0.3);
+}
+
+/* Dato afectivo (Preferencia personal del usuario) */
+.badge-preference {
+  background: #F2E8F5;
+  color: #5C3269;
+  border: 1px solid rgba(92, 50, 105, 0.24);
+}
+
+/* Etiqueta explícita para datos de demostración */
+.badge-demo {
+  background: var(--status-warn-bg);
+  color: var(--status-warn);
+  border: 1px solid rgba(158, 88, 20, 0.35);
+}
+
+.badge-warn {
+  background: var(--status-warn-bg);
+  color: var(--status-warn);
+  border: 1px solid rgba(158, 88, 20, 0.3);
+}
+
+/* --- Formularios accesibles --- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.9rem 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.field-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: var(--status-error);
+  font-weight: 500;
+}
+
+.input, select.input, textarea.input {
+  width: 100%;
+  padding: 0.52rem 0.7rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: #FFF;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.input:focus {
+  border-color: var(--accent-caramel);
+  box-shadow: 0 0 0 3px rgba(181, 101, 49, 0.16);
+  outline: none;
+}
+
+textarea.input {
+  min-height: 4.5rem;
+  resize: vertical;
+}
+
+/* --- Avisos / Alertas de estado --- */
+.alert {
+  padding: 0.78rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.alert-success {
+  background: var(--accent-sage-soft);
+  border-color: rgba(59, 102, 84, 0.3);
+  color: #214033;
+}
+
+.alert-warn {
+  background: var(--status-warn-bg);
+  border-color: rgba(158, 88, 20, 0.35);
+  color: var(--status-warn);
+}
+
+.alert-error {
+  background: var(--status-error-bg);
+  border-color: rgba(158, 42, 43, 0.35);
+  color: var(--status-error);
+}
+
+.alert-info {
+  background: var(--status-info-bg);
+  border-color: rgba(44, 85, 110, 0.28);
+  color: var(--status-info);
+}
+
+/* --- Tablas limpias de laboratorio --- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+table.data-table th,
+table.data-table td {
+  padding: 0.62rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-hairline);
+  vertical-align: top;
+}
+
+table.data-table th {
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-weight: 620;
+  font-size: 0.77rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+table.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Cronómetro prominente (Brew Assistant) --- */
+.timer-stage {
+  border-radius: var(--radius-xl);
+  padding: 1.6rem 1.75rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.timer-stage.theme-oscuro {
+  background: #17120F;
+  color: #F7F3EC;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.timer-stage.theme-oscuro h2,
+.timer-stage.theme-oscuro h3,
+.timer-stage.theme-oscuro .timer-digits {
+  color: #FAF6F0;
+}
+
+.timer-digits {
+  font-size: clamp(3rem, 7vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Estados vacíos útiles --- */
+.empty-state {
+  text-align: center;
+  padding: 2.1rem 1.4rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: rgba(253, 251, 247, 0.65);
+}
+
+/* --- Pantalla de autenticación --- */
+.auth-layout {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 20% 15%, #EFE7DA 0%, #F6F2EB 55%, #EAE2D6 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 26.5rem;
+  background: var(--bg-elevated);
+  backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 var(--border-glass-top);
+  border-radius: var(--radius-xl);
+  padding: 1.85rem 1.9rem;
+}
+
+/* --- Adaptabilidad Tablet y Móvil --- */
+@media (max-width: 920px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .app-sidebar {
+    position: static;
+    height: auto;
+    padding: 0.85rem 1rem;
+  }
+  .nav-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .app-content, .app-topbar {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* --- Preferencias de accesibilidad (Apple Design §14) --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn:active, .nav-link:active, .btn.is-pressing, .nav-link.is-pressing {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .app-topbar, .app-sidebar, .auth-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .app-topbar, .auth-card {
+    background: var(--bg-surface) !important;
+  }
+  .app-sidebar {
+    background: #1C1613 !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --border-hairline: rgba(28, 22, 19, 0.38);
+    --border-strong: rgba(28, 22, 19, 0.65);
+  }
+}

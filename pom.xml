@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.brewlab</groupId>
+  <artifactId>brewlab</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>BrewLab</name>
+  <description>Laboratorio digital de café de especialidad (MVC Servlets + JSP + MySQL + JWT)</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Bytecode Java 8: el compilador JSP (ecj) de Tomcat 8.5 de XAMPP debe poder leer nuestras clases. -->
+    <maven.compiler.release>8</maven.compiler.release>
+
+    <mysql.connector.version>9.3.0</mysql.connector.version>
+    <jjwt.version>0.12.6</jjwt.version>
+    <gson.version>2.13.1</gson.version>
+    <!-- HikariCP 4.0.x es la última línea compatible con Java 8 -->
+    <hikaricp.version>4.0.3</hikaricp.version>
+    <slf4j.version>2.0.17</slf4j.version>
+    <junit.version>5.12.2</junit.version>
+    <surefire.version>3.5.3</surefire.version>
+  </properties>
+
+  <dependencies>
+    <!-- Proporcionadas por Tomcat 8.5 (Servlet 3.1) -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Persistencia -->
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>${mysql.connector.version}</version>
+      <exclusions>
+        <!-- protobuf solo lo usa X DevAPI, que no utilizamos -->
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>${hikaricp.version}</version>
+    </dependency>
+    <!-- Fallback relacional SQL local compatible con MySQL cuando el esquema MySQL externo aún no ha sido aprovisionado -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.2.224</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <!-- JWT (firma HS256) con serialización Gson -->
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-api</artifactId>
+      <version>${jjwt.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-gson</artifactId>
+      <version>${jjwt.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+    </dependency>
+
+    <!-- Pruebas -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!-- La raíz del proyecto ES la aplicación web desplegada por Tomcat (webapps/Proyecto BrewLab). -->
+    <outputDirectory>${project.basedir}/WEB-INF/classes</outputDirectory>
+    <finalName>brewlab</finalName>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.4.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.14.0</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+          <showWarnings>true</showWarnings>
+          <compilerArgs>
+            <!-- "lint": todas las advertencias son errores, excepto el aviso de release 8 obsoleto -->
+            <arg>-Xlint:all,-options,-serial,-processing</arg>
+            <arg>-Werror</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+
+      <!-- Copia las dependencias de ejecución a WEB-INF/lib para que Tomcat las cargue -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.8.1</version>
+        <executions>
+          <execution>
+            <id>copy-runtime-libs</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/WEB-INF/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Pruebas unitarias: *Test.java -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire.version}</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+      </plugin>
+
+      <!-- Pruebas de integración contra MySQL (brewlab_test): *IT.java, se ejecutan con "verify" -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${surefire.version}</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+          <systemPropertyVariables>
+            <brewlab.config>${project.basedir}/WEB-INF/config/brewlab.properties</brewlab.config>
+          </systemPropertyVariables>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- WAR distribuible opcional (target/brewlab.war) generado desde la raíz, excluyendo fuentes -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <warSourceDirectory>${project.basedir}</warSourceDirectory>
+          <warSourceExcludes>src/**,e2e/**,db/**,scripts/**,target/**,node_modules/**,test-results/**,playwright-report/**,.agents/**,.mvn/**,.git/**,WEB-INF/classes/**,WEB-INF/lib/**,WEB-INF/data/**,WEB-INF/config/brewlab.properties,pom.xml,mvnw,mvnw.cmd,package.json,package-lock.json,playwright.config.js,README.md,.gitignore,.gitattributes</warSourceExcludes>
+          <failOnMissingWebXml>true</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

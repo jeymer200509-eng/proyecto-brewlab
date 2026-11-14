@@ -1,0 +1,23 @@
+# Salida de compilación (Maven escribe directamente en la app desplegada)
+/target/
+/WEB-INF/classes/
+/WEB-INF/lib/
+
+# Configuración local con secretos (credenciales de BD y secreto JWT) y datos locales
+/WEB-INF/config/brewlab.properties
+/WEB-INF/data/
+/db/setup.local.sql
+
+# Node / Playwright
+/node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/e2e/.auth/
+
+# IDE / SO
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

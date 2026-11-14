@@ -1,0 +1,115 @@
+<%@ page pageEncoding="UTF-8" session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:if test="${not empty backupSectionEnabled}">
+  <section class="surface-card" aria-labelledby="backup-heading" style="margin-top: 1rem;">
+    <div class="card-header">
+      <div>
+        <h2 id="backup-heading">Respaldo, Restauración y Datos de Demostración</h2>
+        <p class="field-hint" style="margin-bottom:0;">
+          Exportación completa JSON (esquema v<span class="tabular"><c:out value="${schemaVersion}"/></span>) con prevalidación previa a restaurar, exportación CSV de tablas y semilla explícita de demostración.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="surface-card" style="background: var(--bg-subtle);">
+        <h3>Exportar respaldo completo (JSON)</h3>
+        <p style="font-size:0.84rem; color: var(--text-secondary);">
+          Incluye versión de esquema, lotes de café, lotes de tostión, equipos, perfiles de agua, recetas, sesiones, eventos, cataciones y experimentos.
+        </p>
+        <div class="cluster">
+          <a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/app/respaldo?action=exportJson">
+            Descargar respaldo JSON
+          </a>
+        </div>
+      </div>
+
+      <div class="surface-card" style="background: var(--bg-subtle);">
+        <h3>Exportar tablas (CSV)</h3>
+        <p style="font-size:0.84rem; color: var(--text-secondary);">
+          Descarga archivos CSV auditables con valores desconocidos vacíos (nunca rellenados con cero).
+        </p>
+        <div class="cluster">
+          <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/respaldo?action=exportCsv&amp;table=coffee_lots">CSV Cafés</a>
+          <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/respaldo?action=exportCsv&amp;table=roast_batches">CSV Tostiones</a>
+          <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/respaldo?action=exportCsv&amp;table=brew_sessions">CSV Sesiones</a>
+          <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/respaldo?action=exportCsv&amp;table=sensory_assessments">CSV Cataciones</a>
+        </div>
+      </div>
+
+      <div class="surface-card" style="background: var(--bg-subtle);">
+        <h3>Datos de demostración</h3>
+        <p style="font-size:0.84rem; color: var(--text-secondary);">
+          Carga un recorrido completo marcado explícitamente con <code>[DEMO]</code> o limpia tus registros actuales.
+        </p>
+        <div class="cluster">
+          <form method="post" action="${pageContext.request.contextPath}/app/respaldo" data-once>
+            <input type="hidden" name="_csrf" value="${fn:escapeXml(csrfToken)}">
+            <input type="hidden" name="action" value="seedDemo">
+            <button type="submit" class="btn btn-caramel btn-sm">Cargar datos [DEMO]</button>
+          </form>
+          <form method="post" action="${pageContext.request.contextPath}/app/respaldo" data-once>
+            <input type="hidden" name="_csrf" value="${fn:escapeXml(csrfToken)}">
+            <input type="hidden" name="action" value="clearAll">
+            <button type="submit" class="btn btn-danger btn-sm">Vaciar mis datos</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="surface-card" style="margin-top: 1rem;">
+      <h3>Importar y restaurar respaldo JSON (con prevalidación)</h3>
+      <form method="post" action="${pageContext.request.contextPath}/app/respaldo" class="stack-md">
+        <input type="hidden" name="_csrf" value="${fn:escapeXml(csrfToken)}">
+        <input type="hidden" name="action" value="previewImport">
+        <div class="field">
+          <label class="field-label" for="jsonPayload">Pega aquí el contenido del archivo de respaldo JSON</label>
+          <textarea class="input" id="jsonPayload" name="jsonPayload" rows="5"
+                    placeholder='{"format":"brewlab-backup","schemaVersion":...}'><c:out value="${previewJsonPayload}"/></textarea>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-secondary btn-sm">1. Prevalidar y ver vista previa</button>
+        </div>
+      </form>
+
+      <c:if test="${not empty importPreview}">
+        <div class="surface-card" style="margin-top: 0.9rem; background: var(--bg-subtle);">
+          <c:choose>
+            <c:when test="${importPreview.valid}">
+              <div class="alert alert-info" role="status">
+                <span>
+                  Prevalidación correcta (esquema v<span class="tabular"><c:out value="${importPreview.schemaVersion}"/></span>).
+                  Se restaurarán:
+                  <strong class="tabular"><c:out value="${importPreview.coffeeLotsCount}"/></strong> lotes de café,
+                  <strong class="tabular"><c:out value="${importPreview.roastBatchesCount}"/></strong> lotes de tostión,
+                  <strong class="tabular"><c:out value="${importPreview.equipmentCount}"/></strong> equipos,
+                  <strong class="tabular"><c:out value="${importPreview.waterProfilesCount}"/></strong> perfiles de agua,
+                  <strong class="tabular"><c:out value="${importPreview.recipesCount}"/></strong> recetas,
+                  <strong class="tabular"><c:out value="${importPreview.sessionsCount}"/></strong> sesiones,
+                  <strong class="tabular"><c:out value="${importPreview.assessmentsCount}"/></strong> evaluaciones sensoriales y
+                  <strong class="tabular"><c:out value="${importPreview.experimentsCount}"/></strong> experimentos.
+                </span>
+              </div>
+              <form method="post" action="${pageContext.request.contextPath}/app/respaldo" data-once>
+                <input type="hidden" name="_csrf" value="${fn:escapeXml(csrfToken)}">
+                <input type="hidden" name="action" value="confirmImport">
+                <textarea name="jsonPayload" class="sr-only" aria-hidden="true"><c:out value="${previewJsonPayload}"/></textarea>
+                <label class="cluster" style="margin-bottom:0.65rem; cursor:pointer;">
+                  <input type="checkbox" name="confirmReplace" value="true" required>
+                  <span>Confirmo reemplazar mis registros actuales con este respaldo validado.</span>
+                </label>
+                <button type="submit" class="btn btn-primary btn-sm">2. Confirmar y restaurar respaldo</button>
+              </form>
+            </c:when>
+            <c:otherwise>
+              <div class="alert alert-error" role="alert">
+                <span>Respaldo rechazado: <c:out value="${importPreview.errorMessage}"/></span>
+              </div>
+            </c:otherwise>
+          </c:choose>
+        </div>
+      </c:if>
+    </div>
+  </section>
+</c:if>

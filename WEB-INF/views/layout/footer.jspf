@@ -1,0 +1,7 @@
+<%@ page pageEncoding="UTF-8" session="false" %>
+    </main>
+  </div>
+</div>
+<script src="${pageContext.request.contextPath}/assets/js/brewlab.js" defer></script>
+</body>
+</html>
