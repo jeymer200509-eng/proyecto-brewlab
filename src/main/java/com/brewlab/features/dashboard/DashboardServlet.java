@@ -31,6 +31,15 @@ public final class DashboardServlet extends HttpServlet {
         req.setAttribute("schemaVersion", Integer.valueOf(container.getSchemaVersion()));
         req.setAttribute("activeBrewSession", container.getBrewSessionRepository().findLatestInProgress(user.getId()));
 
+        java.util.Map<String, Integer> stats = new java.util.HashMap<>();
+        stats.put("coffeeLotsCount", Integer.valueOf(container.getCoffeeLotRepository().findAll(user.getId(), null, false).size()));
+        stats.put("roastBatchesCount", Integer.valueOf(container.getRoastBatchRepository().findAllByUser(user.getId(), false).size()));
+        stats.put("recipesCount", Integer.valueOf(container.getRecipeRepository().findAllByUser(user.getId()).size()));
+        stats.put("sessionsCount", Integer.valueOf(container.getBrewSessionRepository().findAllByUser(user.getId()).size()));
+        stats.put("assessmentsCount", Integer.valueOf(container.getSensoryRepository().findAllByUser(user.getId()).size()));
+        stats.put("experimentsCount", Integer.valueOf(container.getExperimentRepository().findAllByUser(user.getId()).size()));
+        req.setAttribute("dashboardStats", stats);
+
         WebSupport.render(req, resp, "inicio", "Panel de Laboratorio — BrewLab", "dashboard/index.jsp");
     }
 }

@@ -103,6 +103,24 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>AnalyticsServlet</servlet-name>
+    <servlet-class>com.brewlab.features.analytics.AnalyticsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AnalyticsServlet</servlet-name>
+    <url-pattern>/app/analisis</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ExperimentServlet</servlet-name>
+    <servlet-class>com.brewlab.features.experiments.ExperimentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExperimentServlet</servlet-name>
+    <url-pattern>/app/experimentos</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SettingsServlet</servlet-name>
     <servlet-class>com.brewlab.features.settings.SettingsServlet</servlet-class>
   </servlet>

@@ -30,7 +30,8 @@ public final class SchemaMigrator {
             "V002__coffee_library.sql",
             "V003__equipment_water_and_recipes.sql",
             "V004__brew_assistant.sql",
-            "V005__sensory_lab.sql"
+            "V005__sensory_lab.sql",
+            "V006__experiments.sql"
     ));
 
     private final DataSource dataSource;

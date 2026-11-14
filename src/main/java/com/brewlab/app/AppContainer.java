@@ -5,6 +5,7 @@ import com.brewlab.data.db.SchemaMigrator;
 import com.brewlab.data.repositories.BrewSessionRepository;
 import com.brewlab.data.repositories.CoffeeLotRepository;
 import com.brewlab.data.repositories.EquipmentRepository;
+import com.brewlab.data.repositories.ExperimentRepository;
 import com.brewlab.data.repositories.RecipeRepository;
 import com.brewlab.data.repositories.RoastBatchRepository;
 import com.brewlab.data.repositories.SensoryRepository;
@@ -37,6 +38,7 @@ public final class AppContainer implements AutoCloseable {
     private final RecipeRepository recipeRepository;
     private final BrewSessionRepository brewSessionRepository;
     private final SensoryRepository sensoryRepository;
+    private final ExperimentRepository experimentRepository;
 
     public AppContainer(AppConfig config, DataSourceFactory.ManagedDataSource managedDataSource, Clock clock) {
         this.config = config;
@@ -58,6 +60,7 @@ public final class AppContainer implements AutoCloseable {
         this.brewSessionRepository = new BrewSessionRepository(ds);
         this.sensoryRepository = new SensoryRepository(ds);
         this.sensoryRepository.seedDefaultTaxonomyIfNeeded();
+        this.experimentRepository = new ExperimentRepository(ds);
     }
 
     public static AppContainer from(ServletContext ctx) {
@@ -130,6 +133,10 @@ public final class AppContainer implements AutoCloseable {
 
     public SensoryRepository getSensoryRepository() {
         return sensoryRepository;
+    }
+
+    public ExperimentRepository getExperimentRepository() {
+        return experimentRepository;
     }
 
     @Override

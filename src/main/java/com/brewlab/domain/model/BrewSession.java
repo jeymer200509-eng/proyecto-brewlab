@@ -335,4 +335,61 @@ public final class BrewSession {
     public String getFinalBeverageDisplay() {
         return Formats.withUnit(finalBeverageWeightG, 1, "g");
     }
+
+    public String getStatusLabel() {
+        if (STATUS_ACTIVE.equals(status)) return "En curso";
+        if (STATUS_PAUSED.equals(status)) return "En pausa";
+        if (STATUS_COMPLETED.equals(status)) return "Finalizada";
+        if (STATUS_CANCELLED.equals(status)) return "Cancelada";
+        return "Preparada";
+    }
+
+    public String getPlannedDoseGDisplay() {
+        return getPlannedDoseDisplay();
+    }
+
+    public String getActualDoseGDisplay() {
+        return getActualDoseDisplay();
+    }
+
+    public String getPlannedWaterGDisplay() {
+        return getPlannedWaterDisplay();
+    }
+
+    public String getActualWaterGDisplay() {
+        return getActualWaterDisplay();
+    }
+
+    public String getPlannedTemperatureCDisplay() {
+        return getPlannedTempDisplay();
+    }
+
+    public String getActualTemperatureCDisplay() {
+        return getActualTempDisplay();
+    }
+
+    public String getPlannedGrindDisplay() {
+        return Formats.text(plannedGrindSetting);
+    }
+
+    public String getActualGrindDisplay() {
+        return Formats.text(actualGrindSetting);
+    }
+
+    public String getPlannedTargetTimeDisplay() {
+        if (plannedTargetTimeMinS != null && plannedTargetTimeMaxS != null) {
+            return Formats.duration(plannedTargetTimeMinS) + " – " + Formats.duration(plannedTargetTimeMaxS);
+        }
+        if (plannedTargetTimeMinS != null) {
+            return Formats.duration(plannedTargetTimeMinS);
+        }
+        if (plannedTargetTimeMaxS != null) {
+            return Formats.duration(plannedTargetTimeMaxS);
+        }
+        return Formats.UNKNOWN;
+    }
+
+    public String getFinalBeverageWeightGDisplay() {
+        return getFinalBeverageDisplay();
+    }
 }

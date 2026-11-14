@@ -145,7 +145,7 @@ public final class SensoryRepository {
                 }
 
                 insertAssessmentDescriptors(c, assessment.getId(), assessment.getDescriptors());
-                insertPreferenceRecord(c, assessment.getPreferenceRecord());
+                insertPreferenceRecord(c, assessment.getId(), assessment.getPreferenceRecord());
 
                 c.commit();
             } catch (SQLException ex) {
@@ -252,7 +252,8 @@ public final class SensoryRepository {
         }
     }
 
-    private static void insertPreferenceRecord(Connection c, PreferenceRecord pref) throws SQLException {
+    private static void insertPreferenceRecord(Connection c, String assessmentId, PreferenceRecord pref)
+            throws SQLException {
         if (pref == null) {
             return;
         }
@@ -261,7 +262,7 @@ public final class SensoryRepository {
                 + "affective_context, affective_notes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, pref.getId() != null ? pref.getId() : Ids.newId());
-            ps.setString(2, pref.getSensoryAssessmentId());
+            ps.setString(2, assessmentId);
             ps.setString(3, pref.getUserId());
             JdbcUtils.setNullableDouble(ps, 4, pref.getOverallLiking());
             ps.setString(5, pref.getLikingScale() != null ? pref.getLikingScale() : "1-9");
