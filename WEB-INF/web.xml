@@ -56,6 +56,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>CoffeeLibraryServlet</servlet-name>
+    <servlet-class>com.brewlab.features.coffee.CoffeeLibraryServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CoffeeLibraryServlet</servlet-name>
+    <url-pattern>/app/cafes</url-pattern>
+    <url-pattern>/app/cafes/lote</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>SettingsServlet</servlet-name>
     <servlet-class>com.brewlab.features.settings.SettingsServlet</servlet-class>
   </servlet>

@@ -2,6 +2,8 @@ package com.brewlab.app;
 
 import com.brewlab.data.db.DataSourceFactory;
 import com.brewlab.data.db.SchemaMigrator;
+import com.brewlab.data.repositories.CoffeeLotRepository;
+import com.brewlab.data.repositories.RoastBatchRepository;
 import com.brewlab.data.repositories.UserRepository;
 import com.brewlab.data.repositories.UserSettingsRepository;
 import com.brewlab.security.JwtService;
@@ -23,6 +25,8 @@ public final class AppContainer implements AutoCloseable {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserSettingsRepository userSettingsRepository;
+    private final CoffeeLotRepository coffeeLotRepository;
+    private final RoastBatchRepository roastBatchRepository;
 
     public AppContainer(AppConfig config, DataSourceFactory.ManagedDataSource managedDataSource, Clock clock) {
         this.config = config;
@@ -36,6 +40,8 @@ public final class AppContainer implements AutoCloseable {
         this.jwtService = new JwtService(config.getJwtSecretBase64(), config.getJwtTtlMinutes());
         this.userRepository = new UserRepository(ds);
         this.userSettingsRepository = new UserSettingsRepository(ds);
+        this.coffeeLotRepository = new CoffeeLotRepository(ds);
+        this.roastBatchRepository = new RoastBatchRepository(ds);
     }
 
     public static AppContainer from(ServletContext ctx) {
@@ -80,6 +86,14 @@ public final class AppContainer implements AutoCloseable {
 
     public UserSettingsRepository getUserSettingsRepository() {
         return userSettingsRepository;
+    }
+
+    public CoffeeLotRepository getCoffeeLotRepository() {
+        return coffeeLotRepository;
+    }
+
+    public RoastBatchRepository getRoastBatchRepository() {
+        return roastBatchRepository;
     }
 
     @Override

@@ -26,7 +26,8 @@ public final class SchemaMigrator {
 
     /** Lista ordenada de recursos de migración en {@code /db/migration/}. */
     private static final List<String> MIGRATIONS = Collections.unmodifiableList(Arrays.asList(
-            "V001__base_auth_and_settings.sql"
+            "V001__base_auth_and_settings.sql",
+            "V002__coffee_library.sql"
     ));
 
     private final DataSource dataSource;

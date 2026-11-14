@@ -21,6 +21,7 @@ public final class AppBootstrapListener implements ServletContextListener {
         Clock clock = Clock.system(config.getTimezone());
         AppContainer container = new AppContainer(config, mds, clock);
         ctx.setAttribute(AppContainer.CONTEXT_ATTR, container);
+        ctx.setAttribute("navCafesEnabled", Boolean.TRUE);
     }
 
     @Override
