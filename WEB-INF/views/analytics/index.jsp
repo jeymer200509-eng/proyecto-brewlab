@@ -275,7 +275,7 @@
     </div>
 
     <!-- Gráfico SVG comparativo con ejes, unidad, tamaño de muestra y leyenda -->
-    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; background: rgba(255,255,255,0.65); margin-bottom: 1.25rem;">
+    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; background: var(--bg-subtle); margin-bottom: 1.25rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
         <strong style="font-size: 0.92rem;">
           Gráfico SVG — Perfil Sensorial Descriptivo Comparado (Eje Y: Intensidad en escala 0 a <c:out value="${comparison.sensoryChartMax}" /> pts · Muestra N = <c:out value="${comparison.sampleSize}" />)

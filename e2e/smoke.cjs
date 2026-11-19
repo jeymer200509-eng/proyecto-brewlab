@@ -32,7 +32,7 @@ const routes = ['inicio','cafes','equipos','recetas','preparacion','catacion','a
     await page.locator('[name="password"]').fill('Review-only-9274!');
     await Promise.all([page.waitForURL('**/app/inicio**'),page.getByRole('button',{name:'Crear cuenta e iniciar'}).click()]);
     assert(await page.getByText('Sin sesión abierta',{exact:true}).isVisible());
-    await page.screenshot({path:'test-results/dashboard-empty.png',fullPage:true});
+    await page.screenshot({path:'test-results/dashboard-empty.png',fullPage:true,animations:'disabled'});
     for(const route of routes) await open('/app/'+route);
     // Existing explicit [DEMO] action exercises populated branches and charts.
     await open('/app/ajustes');
@@ -45,7 +45,7 @@ const routes = ['inicio','cafes','equipos','recetas','preparacion','catacion','a
         assert(await page.locator('.lab-nav [aria-current="page"]').count() === (route==='ajustes'?0:1),route+' active nav');
         const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);
         assert(!overflow,route+' overflow at '+width);
-        await page.screenshot({path:`test-results/${route}-${width}.png`,fullPage:true});
+        await page.screenshot({path:`test-results/${route}-${width}.png`,fullPage:true,animations:'disabled'});
       }
     }
     await page.setViewportSize({width:1440,height:1000});
@@ -67,7 +67,7 @@ const routes = ['inicio','cafes','equipos','recetas','preparacion','catacion','a
     assert.equal(await page.locator('#brew-session-stage').getAttribute('data-status'),'ACTIVE');
     await open('/app/inicio');
     assert(await page.getByRole('link',{name:'Abrir sesión'}).isVisible());
-    await page.screenshot({path:'test-results/dashboard-active.png',fullPage:true});
+    await page.screenshot({path:'test-results/dashboard-active.png',fullPage:true,animations:'disabled'});
     await open('/app/catacion');
     await page.locator('#flavor-search-input').fill('jazmín');
     assert((await page.locator('.descriptor-row:visible').count())>0);
@@ -83,7 +83,7 @@ const routes = ['inicio','cafes','equipos','recetas','preparacion','catacion','a
     await boxes.nth(0).check(); await boxes.nth(1).check();
     await Promise.all([page.waitForNavigation(),page.locator('#comparison-sessions button[type="submit"]').click()]);
     assert(await page.locator('svg[role="img"]').isVisible());
-    await page.screenshot({path:'test-results/comparison.png',fullPage:true});
+    await page.screenshot({path:'test-results/comparison.png',fullPage:true,animations:'disabled'});
     await page.emulateMedia({reducedMotion:'reduce'});
     await open('/app/inicio');
     assert.equal(await page.locator('.btn-copper').evaluate(el=>getComputedStyle(el).transform),'none');
@@ -92,7 +92,7 @@ const routes = ['inicio','cafes','equipos','recetas','preparacion','catacion','a
     assert.equal(errors.length,0,errors.join('\n'));
     console.log('PASS: JSP routes, archive/detail/protocol, responsive 320–1440, timer pause/resume, sensory keyboard/search, comparison, logout.');
   } catch(error) {
-    await page.screenshot({path:'test-results/failure.png',fullPage:true});
+    await page.screenshot({path:'test-results/failure.png',fullPage:true,animations:'disabled'});
     fs.writeFileSync('test-results/failure.txt',await page.locator('body').innerText());
     throw error;
   } finally { await browser.close(); }
