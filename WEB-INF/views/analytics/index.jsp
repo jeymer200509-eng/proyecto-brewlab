@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Historial, Analítica y Comparador de Sesiones"/>
+<c:set var="pageHeading" value="Análisis y comparación"/>
+<c:set var="moduleKicker" value="07 / OBSERVATORIO DE RESULTADOS"/>
+<c:set var="moduleDescription" value="Compare sesiones con su contexto, sus mediciones y sus límites."/>
+<c:set var="moduleAnchor" value="comparison-sessions"/>
+<c:set var="moduleAction" value="Seleccionar sesiones"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<section class="surface-card card" style="margin-bottom: 1rem;">
+<details class="module-guidance"><summary>Guía de lectura y criterios del módulo</summary>
   <div class="card-header" style="margin-bottom: 0;">
     <div>
       <div class="field-hint">Módulo 7 · Analytics &amp; Comparison</div>
@@ -19,10 +23,10 @@
       <a class="btn btn-secondary btn-sm" href="${pageContext.request.contextPath}/app/experimentos">Ir a Experiment Lab →</a>
     </div>
   </div>
-</section>
+</details>
 
 <!-- 1. Filtros multicriterio de historial -->
-<section class="surface-card card" style="margin-bottom: 1.5rem;">
+<section class="surface-card card analysis-filters" style="margin-bottom: 1.5rem;">
   <div class="card-header">
     <div>
       <span class="badge badge-planned">Filtro de Historial</span>
@@ -34,7 +38,7 @@
   <form method="get" action="${pageContext.request.contextPath}/app/analisis">
     <div class="form-grid form-grid-4">
       <div class="field">
-        <label class="field-label" for="filterLotId">Café (CoffeeLot)</label>
+        <label class="field-label" for="filterLotId">Café</label>
         <select class="input" id="filterLotId" name="coffeeLotId">
           <option value="">Todos los lotes</option>
           <c:forEach var="lot" items="${coffeeLots}">
@@ -46,7 +50,7 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="filterBatchId">Tostión (RoastBatch)</label>
+        <label class="field-label" for="filterBatchId">Tostión</label>
         <select class="input" id="filterBatchId" name="roastBatchId">
           <option value="">Todos los tuestes</option>
           <c:forEach var="rb" items="${roastBatches}">
@@ -111,7 +115,7 @@
 </section>
 
 <!-- 2. Selección de sesiones en el historial -->
-<section class="surface-card card" style="margin-bottom: 1.5rem;">
+<section id="comparison-sessions" class="surface-card card" style="margin-bottom: 1.5rem;">
   <form method="get" action="${pageContext.request.contextPath}/app/analisis">
     <input type="hidden" name="coffeeLotId" value="<c:out value='${filterLotId}' />" />
     <input type="hidden" name="roastBatchId" value="<c:out value='${filterBatchId}' />" />
@@ -271,32 +275,32 @@
     </div>
 
     <!-- Gráfico SVG comparativo con ejes, unidad, tamaño de muestra y leyenda -->
-    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; background: rgba(255,255,255,0.65); margin-bottom: 1.25rem;">
+    <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; background: var(--bg-subtle); margin-bottom: 1.25rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
         <strong style="font-size: 0.92rem;">
           Gráfico SVG — Perfil Sensorial Descriptivo Comparado (Eje Y: Intensidad en escala 0 a <c:out value="${comparison.sensoryChartMax}" /> pts · Muestra N = <c:out value="${comparison.sampleSize}" />)
         </strong>
-        <span class="mono muted" style="font-size: 0.78rem;">Fuente: tabla comparativa inferior · Null = Sin barra (—)</span>
+        <span class="mono muted" style="font-size: 0.78rem;">Fuente: tabla comparativa inferior · Sin medición = Sin barra (—)</span>
       </div>
 
       <svg viewBox="0 0 760 220" role="img"
            aria-label="Gráfico comparativo de atributos sensoriales con ejes, unidades y leyenda"
            style="width: 100%; height: auto; max-height: 240px;">
         <!-- Líneas guía horizontales y etiquetas del eje Y -->
-        <line x1="56" y1="25" x2="740" y2="25" stroke="#E2D9CC" stroke-dasharray="3 3" />
-        <text x="48" y="29" text-anchor="end" font-size="10" fill="#6D5D53"><c:out value="${comparison.sensoryChartMax}" /> pts</text>
+        <line x1="56" y1="25" x2="740" y2="25" stroke="#34454f" stroke-dasharray="3 3" />
+        <text x="48" y="29" text-anchor="end" font-size="10" fill="#a3b3bc"><c:out value="${comparison.sensoryChartMax}" /> pts</text>
 
-        <line x1="56" y1="95" x2="740" y2="95" stroke="#E2D9CC" stroke-dasharray="3 3" />
-        <text x="48" y="99" text-anchor="end" font-size="10" fill="#6D5D53">Media</text>
+        <line x1="56" y1="95" x2="740" y2="95" stroke="#34454f" stroke-dasharray="3 3" />
+        <text x="48" y="99" text-anchor="end" font-size="10" fill="#a3b3bc">Media</text>
 
-        <line x1="56" y1="165" x2="740" y2="165" stroke="#231915" stroke-width="1.2" />
-        <text x="48" y="169" text-anchor="end" font-size="10" fill="#231915">0 pts</text>
+        <line x1="56" y1="165" x2="740" y2="165" stroke="#a3b3bc" stroke-width="1.2" />
+        <text x="48" y="169" text-anchor="end" font-size="10" fill="#eaf1f3">0 pts</text>
 
         <!-- 8 grupos de atributos en el eje X -->
         <c:set var="attrNames" value="${fn:split('Fragancia,Sabor,Acidez,Dulzor,Amargor,Cuerpo,Posgusto,Balance', ',')}" />
         <c:forEach var="attrLabel" items="${attrNames}" varStatus="attrIdx">
           <c:set var="groupX" value="${72 + attrIdx.index * 83}" />
-          <text x="${groupX + 26}" y="186" text-anchor="middle" font-size="10.5" font-weight="600" fill="#231915">
+          <text x="${groupX + 26}" y="186" text-anchor="middle" font-size="10.5" font-weight="600" fill="#eaf1f3">
             <c:out value="${attrLabel}" />
           </text>
 
@@ -325,7 +329,7 @@
                   </rect>
                 </c:when>
                 <c:otherwise>
-                  <text x="${barX + 5}" y="161" text-anchor="middle" font-size="9" fill="#8C7A6B">—</text>
+                  <text x="${barX + 5}" y="161" text-anchor="middle" font-size="9" fill="#a3b3bc">—</text>
                 </c:otherwise>
               </c:choose>
             </c:if>
@@ -351,7 +355,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><strong>Lote de café (CoffeeLot)</strong></td>
+            <td><strong>Lote de café</strong></td>
             <td><span class="badge badge-measured">Contexto</span></td>
             <c:forEach var="item" items="${comparison.items}">
               <c:set var="cLot" value="${lotMap[item.session.coffeeLotId]}" />
@@ -364,7 +368,7 @@
             </c:forEach>
           </tr>
           <tr>
-            <td><strong>Lote de tostión (RoastBatch)</strong></td>
+            <td><strong>Lote de tostión</strong></td>
             <td><span class="badge badge-measured">Contexto</span></td>
             <c:forEach var="item" items="${comparison.items}">
               <c:set var="cBatch" value="${batchMap[item.session.roastBatchId]}" />

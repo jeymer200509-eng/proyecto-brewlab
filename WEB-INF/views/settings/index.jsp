@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Configuración y Respaldo del Laboratorio"/>
+<c:set var="pageHeading" value="Configuración del laboratorio"/>
+<c:set var="moduleKicker" value="09 / PREFERENCIAS Y RESPALDO"/>
+<c:set var="moduleDescription" value="Ajuste su espacio de trabajo y conserve una copia de sus registros."/>
+<c:set var="moduleAnchor" value="prefs-heading"/>
+<c:set var="moduleAction" value="Editar preferencias"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<div class="grid-2">
+<div class="settings-workspace">
   <section class="surface-card" aria-labelledby="prefs-heading">
     <div class="card-header">
       <div>
@@ -36,11 +40,11 @@
       </div>
 
       <div class="field">
-        <label class="field-label" for="timerTheme">Tema visual del cronómetro (Brew Assistant)</label>
+        <label class="field-label" for="timerTheme">Tema visual del cronómetro</label>
         <select class="input" id="timerTheme" name="timerTheme">
-          <option value="auto" ${settings.timerThemeCode == 'auto' ? 'selected' : ''}>Automático (crema de laboratorio)</option>
+          <option value="auto" ${settings.timerThemeCode == 'auto' ? 'selected' : ''}>Automático (grafito científico)</option>
           <option value="claro" ${settings.timerThemeCode == 'claro' ? 'selected' : ''}>Claro de alto contraste</option>
-          <option value="oscuro" ${settings.timerThemeCode == 'oscuro' ? 'selected' : ''}>Modo oscuro (espresso nocturno)</option>
+          <option value="oscuro" ${settings.timerThemeCode == 'oscuro' ? 'selected' : ''}>Modo oscuro (grafito)</option>
         </select>
       </div>
 

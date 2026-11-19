@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Asistente de Preparación (Brew Assistant)"/>
+<c:set var="pageHeading" value="Estación de preparación"/>
+<c:set var="moduleKicker" value="05 / EXTRACCIÓN EN TIEMPO REAL"/>
+<c:set var="moduleDescription" value="Siga el protocolo, registre lo que sucede y conserve el contexto de su taza."/>
+<c:set var="moduleAnchor" value="setup-session"/>
+<c:set var="moduleAction" value="Configurar sesión"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
 <c:if test="${not empty brewSession}">
@@ -49,9 +53,9 @@
     </div>
 
     <!-- CRONÓMETRO PROMINENTE CON DÍGITOS TABULARES -->
-    <div class="grid-2" style="align-items: center; margin: 1rem 0;">
+    <div class="brew-instrument">
       <div>
-        <div class="field-hint">Tiempo neto transcurrido (reconstruido por marcas temporales)</div>
+        <div class="field-hint">Tiempo neto de preparación</div>
         <div class="timer-digits tabular" id="brew-timer-display" aria-live="off">
           <c:out value="${elapsedFormatted}"/>
         </div>
@@ -330,7 +334,7 @@
 </c:if>
 
 <!-- CONFIGURAR NUEVA SESIÓN DESDE RECETA + CAFÉ/TOSTIÓN -->
-<section class="surface-card" aria-labelledby="setup-session-heading">
+<section class="surface-card" id="setup-session" aria-labelledby="setup-session-heading">
   <div class="card-header">
     <div>
       <h2 id="setup-session-heading">Configurar nueva sesión guiada</h2>
@@ -365,7 +369,7 @@
           </div>
 
           <div class="field">
-            <label class="field-label" for="prep-lot">Lote de café (CoffeeLot)</label>
+            <label class="field-label" for="prep-lot">Lote de café</label>
             <select class="input" id="prep-lot" name="coffeeLotId">
               <option value="">— Usar el de la receta / ninguno —</option>
               <c:forEach var="lot" items="${coffeeLots}">
@@ -377,7 +381,7 @@
           </div>
 
           <div class="field">
-            <label class="field-label" for="prep-batch">Lote de tostión (RoastBatch)</label>
+            <label class="field-label" for="prep-batch">Lote de tostión</label>
             <select class="input" id="prep-batch" name="roastBatchId">
               <option value="">— Seleccionar lote de tostión —</option>
               <c:forEach var="b" items="${roastBatches}">

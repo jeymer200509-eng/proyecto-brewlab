@@ -1,7 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="${recipe.name} (${recipe.method})"/>
+<c:set var="pageHeading" value="Editor de protocolo"/>
+<c:set var="moduleKicker" value="04 / SECUENCIA DE EXTRACCIÓN"/>
+<c:set var="moduleDescription" value="Cada paso define una intención. Revise tiempos y cantidades antes de preparar."/>
+<c:set var="moduleAnchor" value="pasos-receta"/>
+<c:set var="moduleAction" value="Revisar secuencia"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
 <section class="surface-card" aria-labelledby="recipe-header-heading">
@@ -149,11 +153,11 @@
   </details>
 </section>
 
-<!-- PASOS ORDENADOS (RecipeStep) -->
+<!-- PASOS ORDENADOS -->
 <section class="surface-card" id="pasos-receta" aria-labelledby="steps-heading">
   <div class="card-header">
     <div>
-      <h2 id="steps-heading">Pasos ordenados de preparación (RecipeStep)</h2>
+      <h2 id="steps-heading">Pasos ordenados de preparación</h2>
       <p class="field-hint" style="margin-bottom:0;">
         Crea, edita, duplica, reordena (↑/↓) o elimina etapas. Cada paso define inicio objetivo, duración opcional, agua del paso y agua acumulada objetivo.
       </p>

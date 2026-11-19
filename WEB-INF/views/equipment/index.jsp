@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="pageHeading" value="Equipos y Perfiles de Agua (Equipment & Water Lab)"/>
+<c:set var="pageHeading" value="Equipos y agua"/>
+<c:set var="moduleKicker" value="03 / BANCO DE CALIBRACIÓN"/>
+<c:set var="moduleDescription" value="Prepare sus instrumentos. Documente el agua y las condiciones de cada extracción."/>
+<c:set var="moduleAnchor" value="form-eq"/>
+<c:set var="moduleAction" value="Registrar equipo"/>
 <%@ include file="/WEB-INF/views/layout/header.jspf" %>
 
-<div class="grid-2">
+<div class="calibration-bench">
   <!-- EQUIPOS -->
   <section class="surface-card" aria-labelledby="eq-heading">
     <div class="card-header">
@@ -150,7 +154,7 @@
   <section class="surface-card" aria-labelledby="water-heading">
     <div class="card-header">
       <div>
-        <h2 id="water-heading">Perfiles de agua (WaterProfile)</h2>
+        <h2 id="water-heading">Perfiles de agua</h2>
         <p class="field-hint" style="margin-bottom:0;">
           Registra solo los parámetros medidos o conocidos. La ausencia de dato se conserva como <code>null</code> (—), nunca como 0.
         </p>

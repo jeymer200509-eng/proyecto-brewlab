@@ -8,9 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar sesión — BrewLab</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/brewlab.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/scientific-immersion.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/modules.css">
 </head>
-<body>
+<body class="immersion module-auth">
 <main class="auth-layout">
+  <div class="auth-intro"><span class="eyebrow ion">BREWLAB / SCIENTIFIC IMMERSION</span><p class="auth-statement">El café como<br>campo de estudio.</p><p>Observe el origen. Afine la extracción.<br>Descubra lo que revela cada taza.</p><div class="auth-orbit" aria-hidden="true"><span>ORIGEN</span><span>EXTRACCIÓN</span><span>PERCEPCIÓN</span></div></div>
   <section class="auth-card" aria-labelledby="login-heading">
     <div class="brand-block" style="border-bottom-color: var(--border-hairline); padding-left:0; padding-right:0;">
       <span class="brand-mark" aria-hidden="true">BL</span>
@@ -22,7 +25,7 @@
 
     <h1 id="login-heading" style="font-size: 1.35rem; margin-bottom: 0.35rem;">Acceso al laboratorio</h1>
     <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 1.1rem;">
-      Autenticación mediante token JWT firmado (HS256) en cookie segura HttpOnly.
+      Entre a su espacio de muestras, protocolos y descubrimientos.
     </p>
 
     <c:if test="${not empty flashMessage}">
